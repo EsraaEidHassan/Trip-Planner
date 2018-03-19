@@ -24,11 +24,14 @@ public class DBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+        sqLiteDatabase.execSQL(TripTable.createTable());
+        sqLiteDatabase.execSQL(NotesTable.createTable());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TripTable.TRIP_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + NotesTable.NOTES_TABLE_NAME);
+        onCreate(sqLiteDatabase);
     }
 }
