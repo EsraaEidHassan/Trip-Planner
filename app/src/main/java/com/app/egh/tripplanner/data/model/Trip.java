@@ -50,6 +50,10 @@ public class Trip {
         this.roundtrip = roundtrip;
     }
 
+    public Trip() {
+
+    }
+
     // getters
     public int getTrip_id() {
         return trip_id;

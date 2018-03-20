@@ -2,11 +2,16 @@ package com.app.egh.tripplanner.data.model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.app.egh.tripplanner.data.utilities.DBHelper;
 import com.app.egh.tripplanner.data.utilities.NotesTable;
 import com.app.egh.tripplanner.data.utilities.TripTable;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by toshiba on 3/19/2018.
@@ -62,6 +67,64 @@ public class Adapter {
         }
         sqLiteDatabase.close();
 
+    }
+
+    public List<Trip> getAllTrips(){
+
+        List<Trip> trips = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        String query = "SELECT * FROM "
+                +TripTable.TRIP_TABLE_NAME;
+        Cursor cursor = sqLiteDatabase.rawQuery(query,null);
+        if(cursor.moveToFirst()){
+            do{
+                Trip trip = new Trip();
+                trip.setTrip_id(cursor.getInt(cursor.getColumnIndex(TripTable.TRIP_COLUMN_ID)));
+                trip.setTrip_name(cursor.getString(cursor.getColumnIndex(TripTable.TRIP_COLUMN_NAME)));
+                trip.setStart_lat(cursor.getLong(cursor.getColumnIndex(TripTable.TRIP_COLUMN_START_POINT_LAT)));
+                trip.setStart_long(cursor.getLong(cursor.getColumnIndex(TripTable.TRIP_COLUMN_START_POINT_LONG)));
+                trip.setStart_name(cursor.getString(cursor.getColumnIndex(TripTable.TRIP_COLUMN_START_POINT_NAME)));
+                trip.setEnd_lat(cursor.getLong(cursor.getColumnIndex(TripTable.TRIP_COLUMN_END_POINT_LAT)));
+                trip.setEnd_long(cursor.getLong(cursor.getColumnIndex(TripTable.TRIP_COLUMN_END_POINT_LONG)));
+                trip.setEnd_name(cursor.getString(cursor.getColumnIndex(TripTable.TRIP_COLUMN_END_POINT_NAME)));
+                trip.setDate_time(new Date(cursor.getLong(cursor.getColumnIndex(TripTable.TRIP_COLUMN_DATE_TIME)) * 1000) ); // may cause problem
+                trip.setRepeated(cursor.getInt(cursor.getColumnIndex(TripTable.TRIP_COLUMN_REPEATED))>0);
+                trip.setRoundtrip(cursor.getInt(cursor.getColumnIndex(TripTable.TRIP_COLUMN_ROUNDTRIP))>0);
+                trip.setNotes(getAllNotes(trip.getTrip_id()));
+
+                trips.add(trip);
+
+            }while (cursor.moveToNext());
+
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return trips;
+    }
+
+    public List<String> getAllNotes(int trip_id){
+        List<String> notes = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        String query = "SELECT * FROM "
+                +NotesTable.NOTES_TABLE_NAME
+                +" WHERE "
+                +NotesTable.TRIP_COLUMN_ID
+                +" = ?";
+        Cursor cursor = sqLiteDatabase.rawQuery(query,new String[]{trip_id + ""});
+        if(cursor.moveToFirst()){
+            do{
+
+                String note = cursor.getString(cursor.getColumnIndex(NotesTable.NOTES_COLUMN_CONTENT));
+                notes.add(note);
+
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return notes;
     }
 
 
