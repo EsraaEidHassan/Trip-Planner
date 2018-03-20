@@ -3,6 +3,7 @@ package com.app.egh.tripplanner.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -21,8 +22,7 @@ import com.app.egh.tripplanner.activities.AddTripActivity;
 public class HomeFragment extends Fragment {
 
     // views
-    Button addTripBtn;
-
+    FloatingActionButton fab;
     // variables
 
 
@@ -38,13 +38,13 @@ public class HomeFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
 
         // define views
-        addTripBtn = view.findViewById(R.id.addTripBtn);
+        fab = view.findViewById(R.id.addTripBtn);
 
         // define other variables
 
 
         //add listiners to views
-        addTripBtn.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gotoAddTripActivity((AppCompatActivity) getActivity());
