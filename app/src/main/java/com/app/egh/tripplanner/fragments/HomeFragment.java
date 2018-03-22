@@ -59,8 +59,8 @@ public class HomeFragment extends Fragment {
 
     private void gotoAddTripActivity(AppCompatActivity activity){
 
-        Intent intent = new Intent(activity, AddTripActivity.class);
-        startActivity(intent);
+        Intent intent2 = new Intent(activity, AddTripActivity.class);
+        startActivity(intent2);
 
     }
 
