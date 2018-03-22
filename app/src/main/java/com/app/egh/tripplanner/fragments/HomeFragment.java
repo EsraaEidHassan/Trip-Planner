@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
 
     private void gotoAddTripActivity(AppCompatActivity activity){
 
-        Intent intent = new Intent(activity, DetailedActivity.class);
+        Intent intent = new Intent(activity, AddTripActivity.class);
         startActivity(intent);
 
     }
