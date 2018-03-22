@@ -17,6 +17,7 @@ import android.widget.Button;
 
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.AddTripActivity;
+import com.app.egh.tripplanner.activities.DetailedActivity;
 
 
 /**
@@ -59,7 +60,7 @@ public class HomeFragment extends Fragment {
 
     private void gotoAddTripActivity(AppCompatActivity activity){
 
-        Intent intent = new Intent(activity, AddTripActivity.class);
+        Intent intent = new Intent(activity, DetailedActivity.class);
         startActivity(intent);
 
     }
