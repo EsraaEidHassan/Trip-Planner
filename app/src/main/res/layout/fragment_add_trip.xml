@@ -1,13 +1,95 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.app.egh.tripplanner.fragments.AddTripFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    android:orientation="vertical"
+    android:padding="16dp">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Add Trip Fragment" />
 
-</FrameLayout>
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+        <EditText
+            android:id="@+id/tripNameField"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:hint="Name"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/startPointField"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:hint="Start Point"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/endPointField"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:hint="End Point"
+            android:inputType="text|phone" />
+
+        <EditText
+            android:id="@+id/timeAndDateField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:hint="Date and Time"
+            android:inputType="datetime" />
+
+
+        <RadioGroup
+            android:id="@+id/notesRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="83dp">
+
+            <RadioButton
+                android:id="@+id/oneDirectionRadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="One Direction" />
+
+            <RadioButton
+                android:id="@+id/roundTripRadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Round Trip" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/notesTextView"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:text="Notes" />
+
+        <Button
+            android:id="@+id/addNoteBtn"
+
+            android:layout_width="63dp"
+            android:layout_height="wrap_content"
+            android:text="+" />
+
+        <Button
+            android:id="@+id/addTripBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp"
+            android:text="Add Trip"
+            />
+    </LinearLayout>
+</ScrollView>
