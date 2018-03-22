@@ -17,6 +17,7 @@ import android.widget.Button;
 
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.AddTripActivity;
+import com.app.egh.tripplanner.activities.DetailedActivity;
 
 
 /**
