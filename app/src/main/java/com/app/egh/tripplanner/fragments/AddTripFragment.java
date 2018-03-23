@@ -31,6 +31,8 @@ import java.util.List;
  */
 public class AddTripFragment extends Fragment {
 
+    private static final String TAG = "AddTripFragment";
+
     Button addNoteBtn;
     Button addTripBtn;
     EditText tripNameField;
@@ -104,7 +106,9 @@ public class AddTripFragment extends Fragment {
 
                     Trip newTrip = new Trip(tripNameField.getText().toString(), startLatit, startLongit, startName, endLatit, endLongit, endName,dateAndTime, repeat,roundTrip, tripNotes);
                     Adapter myAdapter = new Adapter(getActivity());
-                    myAdapter.insert_trip(newTrip);
+                    long trip_id = myAdapter.insert_trip(newTrip);
+                    newTrip.setTrip_id((int) trip_id);
+                    Log.i(TAG,"trip id : "+trip_id);
                     myAdapter.insert_Notes(newTrip);
                 }
         });
