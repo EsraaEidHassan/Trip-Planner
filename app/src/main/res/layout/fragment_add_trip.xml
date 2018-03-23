@@ -40,11 +40,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:weightSum="2"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/dateField"
-                android:layout_width="153dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
@@ -55,14 +57,15 @@
 
             <EditText
                 android:id="@+id/timeField"
-                android:layout_width="158dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/colorPrimaryDark"
+                android:focusable="false"
                 android:hint="Time"
-                android:inputType="datetime"
-                android:focusable="false"/>
+                android:inputType="datetime" />
         </LinearLayout>
 
 

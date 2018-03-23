@@ -2,10 +2,12 @@ package com.app.egh.tripplanner.fragments;
 
 
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.egh.tripplanner.R;
+import com.app.egh.tripplanner.activities.AddTripActivity;
+import com.app.egh.tripplanner.activities.HomeActivity;
 import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -121,6 +125,9 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                     newTrip.setTrip_id((int) trip_id);
                     Log.i(TAG,"trip id : "+trip_id);
                     myAdapter.insert_Notes(newTrip);
+
+                    if(validate())
+                        gotoHomeActivity((AppCompatActivity) getActivity());
                 }
         });
 
@@ -178,5 +185,57 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         if(hourOfDay>=12)
             pm="pm";
             timeField.setText(h+":"+minute+" "+pm);
+    }
+
+    private void gotoHomeActivity(AppCompatActivity activity){
+
+        Intent intent = new Intent(activity, HomeActivity.class);
+        startActivity(intent);
+
+    }
+
+    private boolean validate(){
+
+        int counter = 0;
+        if(tripNameField.getText().toString().equalsIgnoreCase(""))
+        {
+            tripNameField.setHint("please enter trip name");//it gives user to hint
+            tripNameField.setError("please enter trip name");//it gives user to info message //use any one //
+        }else{
+            counter ++;
+        }
+        if(startPointField.getText().toString().equalsIgnoreCase(""))
+        {
+            startPointField.setHint("please enter start point");
+            startPointField.setError("please enter start point");//it gives user to info message //use any one //
+        }else{
+            counter ++;
+        }
+        if(endPointField.getText().toString().equalsIgnoreCase(""))
+        {
+            endPointField.setHint("please enter end point");
+            endPointField.setError("please enter end point");//it gives user to info message //use any one //
+        }else{
+            counter ++;
+        }
+        if(dateField.getText().toString().equalsIgnoreCase(""))
+        {
+            dateField.setHint("please enter date");
+            dateField.setError("please enter date");//it gives user to info message //use any one //
+        }else{
+            counter ++;
+        }
+        if(timeField.getText().toString().equalsIgnoreCase(""))
+        {
+            timeField.setHint("please enter time");
+            timeField.setError("please enter time");//it gives user to info message //use any one //
+        }else{
+            counter ++;
+        }
+
+        if(counter == 5)
+            return true;
+        else
+            return false;
     }
 }
