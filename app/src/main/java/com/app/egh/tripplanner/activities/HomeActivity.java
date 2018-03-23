@@ -106,8 +106,8 @@ public class HomeActivity extends AppCompatActivity {
             public void onRightClicked(int position) {
                 adapter.tripDataList.remove(position);
                 adapter.notifyItemRemoved(position);
-                adapter.notifyItemRangeRemoved(position,adapter.getItemCount());
-                if(HomeActivity.allTrips.size() > 0)
+                adapter.notifyItemRangeRemoved(position, adapter.getItemCount());
+                if (HomeActivity.allTrips.size() > 0)
                     emptyLabel.setVisibility(View.INVISIBLE);
                 else
                     emptyLabel.setVisibility(View.VISIBLE);
