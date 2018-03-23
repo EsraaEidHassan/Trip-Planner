@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimaryDark"
             android:hint="End Point"
-            android:inputType="text|phone" />
+            android:inputType="text" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:hint="Date"
-                android:inputType="datetime"
+                android:inputType="text"
                 android:focusable="false"/>
 
             <EditText
@@ -63,9 +63,9 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/colorPrimaryDark"
-                android:focusable="false"
+                android:focusable="true"
                 android:hint="Time"
-                android:inputType="datetime" />
+                android:inputType="text" />
         </LinearLayout>
 
 
