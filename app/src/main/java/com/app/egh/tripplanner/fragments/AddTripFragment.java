@@ -13,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +51,8 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
     EditText timeField;
     TextView notesTextView;
     RadioGroup notesRadioGroup;
-
+    RadioButton oneWayRadioBtn;
+    CheckBox repeatCheckbox;
 
     String tripName;
     long startLatit;
@@ -86,6 +89,8 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         notesRadioGroup = view.findViewById(R.id.notesRadioGroup);
         addNoteBtn = view.findViewById(R.id.addNoteBtn);
         addTripBtn = view.findViewById(R.id.addTripBtn);
+        oneWayRadioBtn = view.findViewById(R.id.oneDirectionRadioButton);
+        repeatCheckbox = view.findViewById(R.id.repeatCheckbox);
 
         //defaults values temporarly
         startLatit = (long) 30.1;
@@ -95,9 +100,9 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         endLongit = (long) 31.1;
         endName = "school";
        // dateAndTime = Calendar.getInstance().getTime();
-        Log.i("time"  ,""+dateAndTime);
-        repeat = false;
-        roundTrip = false;
+      //  Log.i("time"  ,""+dateAndTime);
+        //repeat = false;
+       // roundTrip = false;
         tripNotes = new ArrayList<>();
         tripNotes.add("first Note");
         tripNotes.add("second Note");
@@ -113,6 +118,20 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
             @Override
             public void onClick(View view) {
                 Log.i("addTrip","add Trip");
+
+                if(oneWayRadioBtn.isChecked()){
+                    roundTrip = false;
+                }else{
+                    roundTrip = true;
+                }
+                Log.i("addTrip","round trip: "+roundTrip);
+
+                if(repeatCheckbox.isChecked()){
+                    repeat = true;
+                }else{
+                    repeat = false;
+                }
+                Log.i("addTrip","repeat : "+repeat);
 
                 Calendar c = Calendar.getInstance();
                 c.set(year, month, day, hour, min);

@@ -69,18 +69,27 @@
         </LinearLayout>
 
 
+        <CheckBox
+            android:id="@+id/repeatCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Repeat Trip"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"/>
 
         <RadioGroup
             android:id="@+id/notesRadioGroup"
             android:layout_width="match_parent"
-            android:layout_height="83dp">
+            android:layout_height="83dp"
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/oneDirectionRadioButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="One Direction" />
+                android:text="One Direction"
+                android:checked="true"/>
 
             <RadioButton
                 android:id="@+id/roundTripRadioButton"
@@ -89,6 +98,8 @@
                 android:layout_weight="1"
                 android:text="Round Trip" />
         </RadioGroup>
+
+
 
         <TextView
             android:id="@+id/notesTextView"
@@ -102,6 +113,8 @@
             android:layout_width="63dp"
             android:layout_height="wrap_content"
             android:text="+" />
+
+
 
         <Button
             android:id="@+id/addTripBtn"
