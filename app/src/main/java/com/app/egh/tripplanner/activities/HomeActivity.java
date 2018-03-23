@@ -25,7 +25,6 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
     List<TripData> allTrips;
     RecyclerView recyclerView;
-    Button startTrip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);9
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         allTrips = new ArrayList<>();
 
