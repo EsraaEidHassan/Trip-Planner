@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.egh.tripplanner.R;
-import com.app.egh.tripplanner.data.model.TripData;
+import com.app.egh.tripplanner.data.model.Trip;
 
 import java.util.List;
 
@@ -21,20 +21,20 @@ import java.util.List;
 
 public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
 
-    public List<TripData> tripDataList;
+    public List<Trip> tripDataList;
     private Context context;
     private RecyclerView recyclerView;
     private final View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             int itemPosition = recyclerView.getChildLayoutPosition(v);
-            TripData tripData = tripDataList.get(itemPosition);
-            Toast.makeText(context, tripData.getTripName(), Toast.LENGTH_LONG).show();
+            Trip tripData = tripDataList.get(itemPosition);
+            Toast.makeText(context, tripData.getTrip_name(), Toast.LENGTH_LONG).show();
         }
     };
 
 
-    public  TripAdapter(Context context, List<TripData> tripDataList, RecyclerView recyclerView){
+    public  TripAdapter(Context context, List<Trip> tripDataList, RecyclerView recyclerView){
 
         this.context = context;
         this.tripDataList = tripDataList;
@@ -50,11 +50,11 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final TripAdapter.ViewHolder holder, final int position) {
-        TripData tripData = tripDataList.get(position);
+        Trip tripData = tripDataList.get(position);
         holder.imageView.setImageResource(R.mipmap.icon3);
-        holder.tripNameTextView.setText(tripData.getTripName());
-        holder.startLocationTextView.setText(tripData.getStartLocation().toString());
-        holder.destinationTextView.setText(tripData.getDestination().toString());
+        holder.tripNameTextView.setText(tripData.getTrip_name());
+        holder.startLocationTextView.setText(tripData.getStart_name().toString());
+        holder.destinationTextView.setText(tripData.getEnd_name().toString());
     }
 
     @Override

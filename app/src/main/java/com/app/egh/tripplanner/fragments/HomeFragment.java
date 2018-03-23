@@ -15,10 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.AddTripActivity;
 import com.app.egh.tripplanner.activities.DetailedActivity;
+import com.app.egh.tripplanner.activities.HomeActivity;
 import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
 
@@ -49,9 +51,6 @@ public class HomeFragment extends Fragment {
 
         // define views
         fab = view.findViewById(R.id.addTripBtn);
-
-        // define other variables
-
 
         //add listiners to views
         fab.setOnClickListener(new View.OnClickListener() {
