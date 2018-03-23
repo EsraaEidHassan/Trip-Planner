@@ -159,12 +159,20 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         this.year = year;
         this.month = monthOfYear;
         this.day = dayOfMonth;
+        dateField.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
     }
 
     @Override
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+        int h=hourOfDay; String pm="am";
             Log.i("test1"," hour"+hourOfDay);
             this.hour = hourOfDay;
             this.min = minute;
+            if(hourOfDay>12){
+                h=hourOfDay-12;
+            }
+        if(hourOfDay>=12)
+            pm="pm";
+            timeField.setText(h+":"+minute+" "+pm);
     }
 }
