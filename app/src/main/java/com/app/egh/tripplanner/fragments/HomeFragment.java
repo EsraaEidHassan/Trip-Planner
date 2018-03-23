@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,10 @@ import android.widget.Button;
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.AddTripActivity;
 import com.app.egh.tripplanner.activities.DetailedActivity;
+import com.app.egh.tripplanner.data.model.Adapter;
+import com.app.egh.tripplanner.data.model.Trip;
+
+import java.util.List;
 
 
 /**
@@ -25,6 +30,7 @@ import com.app.egh.tripplanner.activities.DetailedActivity;
  */
 public class HomeFragment extends Fragment {
 
+    private static final String TAG = "HomeFragment";
     // views
     FloatingActionButton fab;
     // variables
