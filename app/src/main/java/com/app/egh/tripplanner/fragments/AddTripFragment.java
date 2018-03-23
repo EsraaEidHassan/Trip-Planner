@@ -25,6 +25,10 @@ import com.app.egh.tripplanner.activities.AddTripActivity;
 import com.app.egh.tripplanner.activities.HomeActivity;
 import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -45,8 +49,6 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
     Button addNoteBtn;
     Button addTripBtn;
     EditText tripNameField;
-    EditText startPointField;
-    EditText endPointField;
     EditText dateField;
     EditText timeField;
     TextView notesTextView;
@@ -55,11 +57,11 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
     CheckBox repeatCheckbox;
 
     String tripName;
-    long startLatit;
-    long startLongit;
+    double startLatit;
+    double startLongit;
     String startName;
-    long endLatit;
-    long endLongit;
+    double endLatit;
+    double endLongit;
     String endName;
     Date dateAndTime;
     int year,month,day,hour,min;
@@ -81,8 +83,8 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         // Inflate the layout for this fragment
 
         tripNameField = view.findViewById(R.id.tripNameField);
-        startPointField = view.findViewById(R.id.startPointField);
-        endPointField = view.findViewById(R.id.endPointField);
+      //  startPointField = view.findViewById(R.id.startPointField);
+      //  endPointField = view.findViewById(R.id.endPointField);
         dateField = view.findViewById(R.id.dateField);
         timeField = view.findViewById(R.id.timeField);
         notesTextView =  view.findViewById(R.id.notesTextView);
@@ -93,9 +95,9 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         repeatCheckbox = view.findViewById(R.id.repeatCheckbox);
 
         //defaults values temporarly
-        startLatit = (long) 30.1;
-        startLongit = (long) 31.1;
-        startName = "home";
+       // startLatit = (long) 30.1;
+      //  startLongit = (long) 31.1;
+       // startName = "home";
         endLatit = (long) 30.1;
         endLongit = (long) 31.1;
         endName = "school";
@@ -138,7 +140,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                 dateAndTime = c.getTime();
                 Log.i("time"  ,""+dateAndTime);
 
-                    Trip newTrip = new Trip(tripNameField.getText().toString(), startLatit, startLongit, startName, endLatit, endLongit, endName,dateAndTime, repeat,roundTrip, tripNotes);
+                    Trip newTrip = new Trip(tripNameField.getText().toString(), (long)startLatit, (long)startLongit, startName, (long)endLatit, (long)endLongit, endName,dateAndTime, repeat,roundTrip, tripNotes);
                     Adapter myAdapter = new Adapter(getActivity());
                     long trip_id = myAdapter.insert_trip(newTrip);
                     newTrip.setTrip_id((int) trip_id);
@@ -177,6 +179,57 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                        false
                );
                 tpd.show(getActivity().getFragmentManager(), "Timepickerdialog");
+            }
+        });
+
+
+        PlaceAutocompleteFragment autocompleteFragmentStart = (PlaceAutocompleteFragment)
+                getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_start);
+
+        autocompleteFragmentStart.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i("test22", "Start Place: " + place.getName());
+                Log.i("test22", "Start Place: " + place.getLatLng().longitude);
+                Log.i("test22", "Start Place: " + place.getLatLng().latitude);
+                startLatit =  place.getLatLng().latitude;
+                startLongit = place.getLatLng().longitude;
+                startName = place.getName().toString();
+                Log.i("test22", "Start Place: " + startName);
+                Log.i("test22", "Start Place: " + startLongit);
+                Log.i("test22", "Start Place: " + startLatit);
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("test22", "An error occurred: " + status);
+            }
+        });
+
+        PlaceAutocompleteFragment autocompleteFragmentEnd = (PlaceAutocompleteFragment)
+                getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_end);
+
+        autocompleteFragmentEnd.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i("test22", "end Place: " + place.getName());
+                Log.i("test22", "end Place: " + place.getLatLng().longitude);
+                Log.i("test22", "end Place: " + place.getLatLng().latitude);
+                endLatit =  place.getLatLng().latitude;
+                endLongit = place.getLatLng().longitude;
+                endName = place.getName().toString();
+                Log.i("test22", "Start Place: " + endName);
+                Log.i("test22", "Start Place: " + endLongit);
+                Log.i("test22", "Start Place: " + endLatit);
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("test22", "An error occurred: " + status);
             }
         });
 
@@ -223,7 +276,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         }else{
             counter ++;
         }
-        if(startPointField.getText().toString().equalsIgnoreCase(""))
+      /*  if(startPointField.getText().toString().equalsIgnoreCase(""))
         {
             startPointField.setHint("please enter start point");
             startPointField.setError("please enter start point");//it gives user to info message //use any one //
@@ -236,7 +289,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
             endPointField.setError("please enter end point");//it gives user to info message //use any one //
         }else{
             counter ++;
-        }
+        }*/
         if(dateField.getText().toString().equalsIgnoreCase(""))
         {
             dateField.setHint("please enter date");
@@ -252,7 +305,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
             counter ++;
         }
 
-        if(counter == 5)
+        if(counter == 3)
             return true;
         else
             return false;
