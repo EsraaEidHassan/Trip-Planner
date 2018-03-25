@@ -18,15 +18,14 @@ import com.app.egh.tripplanner.activitiesHelpers.MyDividerItemDecoration;
 import com.app.egh.tripplanner.activitiesHelpers.SwipeController;
 import com.app.egh.tripplanner.activitiesHelpers.SwipeControllerAction;
 import com.app.egh.tripplanner.activitiesHelpers.TripAdapter;
+import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
-    public  static List<Trip> allTrips;
-    RecyclerView recyclerView;
-    TextView emptyLabel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +34,6 @@ public class HomeActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        allTrips = new ArrayList<>();
 
         //=======================================================================//
 
@@ -57,7 +52,8 @@ public class HomeActivity extends AppCompatActivity {
         trip = new TripData("Club", "El dokki","Madent Nasr");
         allTrips.add(trip);*/
 
-       Trip trip = new Trip();
+
+       /*Trip trip = new Trip();
        trip.setTrip_name("ITI");
        trip.setStart_name("Hadayek Elkobba");
        trip.setEnd_name("Smart village");
@@ -85,46 +81,9 @@ public class HomeActivity extends AppCompatActivity {
         trip.setTrip_name("Club");
         trip.setStart_name("Madent Nasr");
         trip.setEnd_name("El dokki");
-        allTrips.add(trip);
+        allTrips.add(trip);*/
 
-        emptyLabel = findViewById(R.id.noTripsLabel);
         // define other variables
-
-        if(HomeActivity.allTrips.size() > 0)
-            emptyLabel.setVisibility(View.INVISIBLE);
-        else
-            emptyLabel.setVisibility(View.VISIBLE);
-
-        final TripAdapter adapter = new TripAdapter(this,allTrips,recyclerView);
-        final SwipeController swipeController = new SwipeController(new SwipeControllerAction() {
-            @Override
-            public void onLeftClicked(int position) {
-                Toast.makeText(getApplicationContext(), "Go to edit activity", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onRightClicked(int position) {
-                adapter.tripDataList.remove(position);
-                adapter.notifyItemRemoved(position);
-                adapter.notifyItemRangeRemoved(position, adapter.getItemCount());
-                if (HomeActivity.allTrips.size() > 0)
-                    emptyLabel.setVisibility(View.INVISIBLE);
-                else
-                    emptyLabel.setVisibility(View.VISIBLE);
-            }
-        });
-
-        recyclerView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayoutManager.VERTICAL, 12));
-        ItemTouchHelper helper = new ItemTouchHelper(swipeController);
-        helper.attachToRecyclerView(recyclerView);
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-                swipeController.onDraw(c);
-            }
-        });
-
-        recyclerView.setAdapter(adapter);
 
     }
 

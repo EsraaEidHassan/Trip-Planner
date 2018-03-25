@@ -1,7 +1,10 @@
 package com.app.egh.tripplanner.activitiesHelpers;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.egh.tripplanner.R;
+import com.app.egh.tripplanner.activities.DetailedActivity;
 import com.app.egh.tripplanner.data.model.Trip;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -21,6 +26,7 @@ import java.util.List;
 
 public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
 
+    private static final String TAG = "TripAdapter";
     public List<Trip> tripDataList;
     private Context context;
     private RecyclerView recyclerView;
@@ -30,6 +36,12 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
             int itemPosition = recyclerView.getChildLayoutPosition(v);
             Trip tripData = tripDataList.get(itemPosition);
             Toast.makeText(context, tripData.getTrip_name(), Toast.LENGTH_LONG).show();
+            Log.i(TAG , String.valueOf(tripData.getDate_time()));
+            Intent intent = new Intent(context, DetailedActivity.class);
+            //Bundle bundle = new Bundle();
+            //bundle.putParcelable();
+            intent.putExtra("trip",tripData);
+            context.startActivity(intent);
         }
     };
 

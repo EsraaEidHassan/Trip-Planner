@@ -31,7 +31,7 @@ public class TripTable {
                 + TRIP_COLUMN_END_POINT_LAT + " TEXT, "
                 + TRIP_COLUMN_END_POINT_LONG + " TEXT, "
                 + TRIP_COLUMN_END_POINT_NAME + " VARCHAR(50), "
-                + TRIP_COLUMN_DATE_TIME + " DATETIME, "
+                + TRIP_COLUMN_DATE_TIME + " TEXT, "
                 + TRIP_COLUMN_REPEATED + " BOOLEAN, "
                 + TRIP_COLUMN_ROUNDTRIP + " BOOLEAN " + ")";
 

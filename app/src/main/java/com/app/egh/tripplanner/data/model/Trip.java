@@ -1,5 +1,6 @@
 package com.app.egh.tripplanner.data.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,15 +8,15 @@ import java.util.List;
  * Created by toshiba on 3/17/2018.
  */
 
-public class Trip {
+public class Trip implements Serializable {
 
     private int trip_id;
     private String trip_name;
-    private long start_lat;
-    private long start_long;
+    private double start_lat;
+    private double start_long;
     private String start_name;
-    private long end_lat;
-    private long end_long;
+    private double end_lat;
+    private double end_long;
     private String end_name;
     private Date date_time;
     private boolean repeated;
@@ -63,11 +64,11 @@ public class Trip {
         return trip_name;
     }
 
-    public long getStart_lat() {
+    public double getStart_lat() {
         return start_lat;
     }
 
-    public long getStart_long() {
+    public double getStart_long() {
         return start_long;
     }
 
@@ -75,11 +76,11 @@ public class Trip {
         return start_name;
     }
 
-    public long getEnd_lat() {
+    public double getEnd_lat() {
         return end_lat;
     }
 
-    public long getEnd_long() {
+    public double getEnd_long() {
         return end_long;
     }
 
@@ -112,11 +113,11 @@ public class Trip {
         this.trip_name = trip_name;
     }
 
-    public void setStart_lat(long start_lat) {
+    public void setStart_lat(double start_lat) {
         this.start_lat = start_lat;
     }
 
-    public void setStart_long(long start_long) {
+    public void setStart_long(double start_long) {
         this.start_long = start_long;
     }
 
@@ -124,11 +125,11 @@ public class Trip {
         this.start_name = start_name;
     }
 
-    public void setEnd_lat(long end_lat) {
+    public void setEnd_lat(double end_lat) {
         this.end_lat = end_lat;
     }
 
-    public void setEnd_long(long end_long) {
+    public void setEnd_long(double end_long) {
         this.end_long = end_long;
     }
 
