@@ -9,6 +9,8 @@ import com.app.egh.tripplanner.data.utilities.DBHelper;
 import com.app.egh.tripplanner.data.utilities.NotesTable;
 import com.app.egh.tripplanner.data.utilities.TripTable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +40,7 @@ public class Adapter {
         contentValues.put(TripTable.TRIP_COLUMN_END_POINT_LAT,trip.getEnd_lat()+"");
         contentValues.put(TripTable.TRIP_COLUMN_END_POINT_LONG,trip.getEnd_long()+"");
         contentValues.put(TripTable.TRIP_COLUMN_END_POINT_NAME,trip.getEnd_name());
-        contentValues.put(TripTable.TRIP_COLUMN_DATE_TIME, String.valueOf(trip.getDate_time())); // may cause problem
+        contentValues.put(TripTable.TRIP_COLUMN_DATE_TIME, fromDateToString (trip.getDate_time())); // may cause problem
 
         if(trip.isRepeated())
             contentValues.put(TripTable.TRIP_COLUMN_REPEATED,1);
@@ -82,13 +84,13 @@ public class Adapter {
                 Trip trip = new Trip();
                 trip.setTrip_id(cursor.getInt(cursor.getColumnIndex(TripTable.TRIP_COLUMN_ID)));
                 trip.setTrip_name(cursor.getString(cursor.getColumnIndex(TripTable.TRIP_COLUMN_NAME)));
-                trip.setStart_lat(cursor.getLong(cursor.getColumnIndex(TripTable.TRIP_COLUMN_START_POINT_LAT)));
-                trip.setStart_long(cursor.getLong(cursor.getColumnIndex(TripTable.TRIP_COLUMN_START_POINT_LONG)));
+                trip.setStart_lat(cursor.getDouble(cursor.getColumnIndex(TripTable.TRIP_COLUMN_START_POINT_LAT)));
+                trip.setStart_long(cursor.getDouble(cursor.getColumnIndex(TripTable.TRIP_COLUMN_START_POINT_LONG)));
                 trip.setStart_name(cursor.getString(cursor.getColumnIndex(TripTable.TRIP_COLUMN_START_POINT_NAME)));
-                trip.setEnd_lat(cursor.getLong(cursor.getColumnIndex(TripTable.TRIP_COLUMN_END_POINT_LAT)));
-                trip.setEnd_long(cursor.getLong(cursor.getColumnIndex(TripTable.TRIP_COLUMN_END_POINT_LONG)));
+                trip.setEnd_lat(cursor.getDouble(cursor.getColumnIndex(TripTable.TRIP_COLUMN_END_POINT_LAT)));
+                trip.setEnd_long(cursor.getDouble(cursor.getColumnIndex(TripTable.TRIP_COLUMN_END_POINT_LONG)));
                 trip.setEnd_name(cursor.getString(cursor.getColumnIndex(TripTable.TRIP_COLUMN_END_POINT_NAME)));
-                trip.setDate_time(new Date(cursor.getLong(cursor.getColumnIndex(TripTable.TRIP_COLUMN_DATE_TIME)) * 1000) ); // may cause problem
+                trip.setDate_time(fromStringToDate(cursor.getString(cursor.getColumnIndex(TripTable.TRIP_COLUMN_DATE_TIME)))); // may cause problem
                 trip.setRepeated(cursor.getInt(cursor.getColumnIndex(TripTable.TRIP_COLUMN_REPEATED))>0);
                 trip.setRoundtrip(cursor.getInt(cursor.getColumnIndex(TripTable.TRIP_COLUMN_ROUNDTRIP))>0);
                 trip.setNotes(getAllNotes(trip.getTrip_id()));
@@ -127,7 +129,43 @@ public class Adapter {
         return notes;
     }
 
+    public boolean deleteTrip(int trip_id){
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        boolean notesDeleted = deleteNote(trip_id);
+        if(notesDeleted)
+            return sqLiteDatabase.delete(TripTable.TRIP_TABLE_NAME , TripTable.TRIP_COLUMN_ID + " = " + trip_id,null) > 0;
+        else
+            return false;
+    }
 
+    public boolean deleteNote(int trip_id){
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        return sqLiteDatabase.delete(NotesTable.NOTES_TABLE_NAME , NotesTable.TRIP_COLUMN_ID + " = " + trip_id,null) > 0;
+
+    }
+
+    public static String fromDateToString(Date date){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateTime = dateFormat.format(date);
+        System.out.println("Current Date Time : " + dateTime);
+
+        return dateTime;
+    }
+
+    public static Date fromStringToDate(String dateStr){
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = format.parse(dateStr);
+            System.out.println(date);
+            return date;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
 
 

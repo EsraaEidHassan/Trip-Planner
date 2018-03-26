@@ -11,7 +11,10 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trip Name" />
         <EditText
             android:id="@+id/tripNameField"
             android:layout_width="fill_parent"
@@ -19,7 +22,7 @@
             android:backgroundTint="@color/colorPrimaryDark"
             android:hint="Name"
             android:inputType="text" />
-
+<!--
         <EditText
             android:id="@+id/startPointField"
             android:layout_width="fill_parent"
@@ -28,15 +31,41 @@
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:hint="Start Point"
-            android:inputType="text" />
+            android:inputType="text" /> -->
 
-        <EditText
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Point"
+            android:layout_marginTop="20dp"/>
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            >
+        </fragment>
+
+     <!--   <EditText
             android:id="@+id/endPointField"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimaryDark"
             android:hint="End Point"
-            android:inputType="text|phone" />
+            android:inputType="text" /> -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="End Point" />
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            >
+        </fragment>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +81,7 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:hint="Date"
-                android:inputType="datetime"
+                android:inputType="text"
                 android:focusable="false"/>
 
             <EditText
@@ -65,7 +94,7 @@
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:focusable="false"
                 android:hint="Time"
-                android:inputType="datetime" />
+                android:inputType="text" />
         </LinearLayout>
 
 
