@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.AddTripActivity" />
-        <activity android:name=".activities.DetailedActivity"></activity>
+        <activity android:name=".activities.DetailedActivity" />
     </application>
 
 </manifest>

@@ -1,9 +1,11 @@
 package com.app.egh.tripplanner.activitiesHelpers;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper.Callback;
 import android.view.MotionEvent;
@@ -205,6 +207,8 @@ public class SwipeController extends Callback {
 
         float textWidth = p.measureText(text);
         c.drawText(text, button.centerX()-(textWidth/2), button.centerY()+(textSize/2), p);
+
+
     }
     public  void onDraw(Canvas c){
         if (currentItemViewHolder != null) {
