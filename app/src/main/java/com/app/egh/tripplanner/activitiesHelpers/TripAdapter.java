@@ -2,7 +2,6 @@ package com.app.egh.tripplanner.activitiesHelpers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.DetailedActivity;
 import com.app.egh.tripplanner.data.model.Trip;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -82,7 +80,7 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             tripNameTextView = itemView.findViewById(R.id.title);
-            startLocationTextView = itemView.findViewById(R.id.start2);
+            startLocationTextView = itemView.findViewById(R.id.end);
             destinationTextView = itemView.findViewById(R.id.end2);
             imageView = itemView.findViewById(R.id.imageView);
             startTrip = itemView.findViewById(R.id.startTrip);
