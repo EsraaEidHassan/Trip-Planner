@@ -51,6 +51,7 @@ public class HomeFragment extends Fragment {
 
     // variables
     public  static List<Trip> allTrips;
+    Adapter dbAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -74,7 +75,7 @@ public class HomeFragment extends Fragment {
         // define variables
 
         allTrips = new ArrayList<>();
-        Adapter dbAdapter = new Adapter(getContext());
+        dbAdapter = new Adapter(getContext());
         allTrips = dbAdapter.getAllTrips();
 
         if(allTrips.size() > 0)
@@ -107,6 +108,12 @@ public class HomeFragment extends Fragment {
                     emptyLabel.setVisibility(View.INVISIBLE);
                 else
                     emptyLabel.setVisibility(View.VISIBLE);
+
+                Boolean isDeleted = dbAdapter.deleteTrip(allTrips.get(position).getTrip_id());
+                if(isDeleted)
+                    Toast.makeText(getContext(),"Trip Delete Successfuly !",Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(getContext(),"Cann't delete this Trip !",Toast.LENGTH_LONG).show();
             }
         });
 

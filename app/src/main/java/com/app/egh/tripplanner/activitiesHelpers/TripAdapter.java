@@ -2,7 +2,6 @@ package com.app.egh.tripplanner.activitiesHelpers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.DetailedActivity;
 import com.app.egh.tripplanner.data.model.Trip;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -63,10 +61,11 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final TripAdapter.ViewHolder holder, final int position) {
         Trip tripData = tripDataList.get(position);
-        holder.imageView.setImageResource(R.mipmap.icon3);
+        holder.imageView.setImageResource(R.drawable.rowicon);
         holder.tripNameTextView.setText(tripData.getTrip_name());
         holder.startLocationTextView.setText(tripData.getStart_name().toString());
         holder.destinationTextView.setText(tripData.getEnd_name().toString());
+      //  holder.startTrip.setCompoundDrawablesWithIntrinsicBounds(R.drawable.images,0,0,0);
     }
 
     @Override
@@ -81,8 +80,8 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             tripNameTextView = itemView.findViewById(R.id.title);
-            startLocationTextView = itemView.findViewById(R.id.start);
-            destinationTextView = itemView.findViewById(R.id.end);
+            startLocationTextView = itemView.findViewById(R.id.end);
+            destinationTextView = itemView.findViewById(R.id.end2);
             imageView = itemView.findViewById(R.id.imageView);
             startTrip = itemView.findViewById(R.id.startTrip);
             startTrip.setOnClickListener(new View.OnClickListener() {

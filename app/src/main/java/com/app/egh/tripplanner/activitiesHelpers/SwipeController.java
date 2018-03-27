@@ -1,9 +1,11 @@
 package com.app.egh.tripplanner.activitiesHelpers;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper.Callback;
 import android.view.MotionEvent;
@@ -179,16 +181,16 @@ public class SwipeController extends Callback {
 
         buttonInstance = null;
         if (buttonShowedState == ButtonsState.LEFT_VISIBLE) {
-            RectF leftButton = new RectF(itemView.getLeft()+10, itemView.getTop()+15, itemView.getLeft() + buttonWidthWithoutPadding, itemView.getTop()+375);
-            p.setColor(Color.BLUE);
+            RectF leftButton = new RectF(itemView.getLeft()+10, itemView.getTop()+15, itemView.getLeft() + buttonWidthWithoutPadding, itemView.getTop()+315);
+            p.setColor(Color.parseColor("#009688"));
             c.drawRoundRect(leftButton, corners, corners, p);
             drawText("EDIT", c, leftButton, p);
 
             buttonInstance = leftButton;
         }
         else if (buttonShowedState == ButtonsState.RIGHT_VISIBLE) {
-            RectF rightButton = new RectF(itemView.getRight() - buttonWidthWithoutPadding, itemView.getTop()+15, itemView.getRight()-15, itemView.getTop()+375);
-            p.setColor(Color.RED);
+            RectF rightButton = new RectF(itemView.getRight() - buttonWidthWithoutPadding, itemView.getTop()+15, itemView.getRight()-15, itemView.getTop()+315);
+            p.setColor(Color.parseColor("#ff4081"));
             c.drawRoundRect(rightButton, corners, corners, p);
             drawText("DELETE", c, rightButton, p);
 
@@ -205,6 +207,8 @@ public class SwipeController extends Callback {
 
         float textWidth = p.measureText(text);
         c.drawText(text, button.centerX()-(textWidth/2), button.centerY()+(textSize/2), p);
+
+
     }
     public  void onDraw(Canvas c){
         if (currentItemViewHolder != null) {

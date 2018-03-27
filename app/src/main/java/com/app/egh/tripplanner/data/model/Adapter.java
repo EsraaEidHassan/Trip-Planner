@@ -129,6 +129,21 @@ public class Adapter {
         return notes;
     }
 
+    public boolean deleteTrip(int trip_id){
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        boolean notesDeleted = deleteNote(trip_id);
+        if(notesDeleted)
+            return sqLiteDatabase.delete(TripTable.TRIP_TABLE_NAME , TripTable.TRIP_COLUMN_ID + " = " + trip_id,null) > 0;
+        else
+            return false;
+    }
+
+    public boolean deleteNote(int trip_id){
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        return sqLiteDatabase.delete(NotesTable.NOTES_TABLE_NAME , NotesTable.TRIP_COLUMN_ID + " = " + trip_id,null) > 0;
+
+    }
+
     public static String fromDateToString(Date date){
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
