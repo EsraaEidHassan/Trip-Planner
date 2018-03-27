@@ -88,8 +88,10 @@
         android:layout_below="@+id/textView8"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="11dp"
+        android:contextClickable="false"
         android:text="@string/createAnAccount"
         android:textColor="@color/colorAccent"
+        android:textIsSelectable="true"
         android:textSize="18sp" />
 
 </RelativeLayout>
