@@ -4,4 +4,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="addTrip">Add Trip</string>
+    <string name="EmailAddress">Email Address</string>
+    <string name="Password">Password</string>
+    <string name="orLogin">Or login with</string>
+    <string name="signIn">Sign in</string>
+    <string name="NotUser">Not a user?</string>
+    <string name="createAnAccount">Create an Account</string>
+    <string name="end">dropoff</string>
+    <string name="start">Start</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="username">User Name</string>
+    <string name="signup">Sign Up</string>
+    <string name="OrSignUpWith">Or sign up with</string>
+    <string name="alreadyUser">Already a user?</string>
 </resources>

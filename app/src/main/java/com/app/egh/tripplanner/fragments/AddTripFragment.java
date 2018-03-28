@@ -3,11 +3,16 @@ package com.app.egh.tripplanner.fragments;
 
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +28,11 @@ import android.widget.Toast;
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.AddTripActivity;
 import com.app.egh.tripplanner.activities.HomeActivity;
+import com.app.egh.tripplanner.activitiesHelpers.MyDividerItemDecoration;
+import com.app.egh.tripplanner.activitiesHelpers.NoteAdapter;
+import com.app.egh.tripplanner.activitiesHelpers.SwipeController;
+import com.app.egh.tripplanner.activitiesHelpers.SwipeControllerAction;
+import com.app.egh.tripplanner.activitiesHelpers.TripAdapter;
 import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
 import com.google.android.gms.common.api.Status;
@@ -70,6 +80,10 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
     List<String> tripNotes;
 
 
+    FloatingActionButton fab;
+    RecyclerView notesRecyclerView;
+    public  static List<String> allNotes;
+
     public AddTripFragment() {
         // Required empty public constructor
     }
@@ -83,8 +97,6 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         // Inflate the layout for this fragment
 
         tripNameField = view.findViewById(R.id.tripNameField);
-      //  startPointField = view.findViewById(R.id.startPointField);
-      //  endPointField = view.findViewById(R.id.endPointField);
         dateField = view.findViewById(R.id.dateField);
         timeField = view.findViewById(R.id.timeField);
         notesTextView =  view.findViewById(R.id.notesTextView);
@@ -94,21 +106,53 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         oneWayRadioBtn = view.findViewById(R.id.oneDirectionRadioButton);
         repeatCheckbox = view.findViewById(R.id.repeatCheckbox);
 
-        //defaults values temporarly
-       // startLatit = (long) 30.1;
-      //  startLongit = (long) 31.1;
-       // startName = "home";
-        endLatit = (long) 30.1;
-        endLongit = (long) 31.1;
-        endName = "school";
-       // dateAndTime = Calendar.getInstance().getTime();
-      //  Log.i("time"  ,""+dateAndTime);
-        //repeat = false;
-       // roundTrip = false;
+        fab = view.findViewById(R.id.addNotesBtn);
+        notesRecyclerView = view.findViewById(R.id.notesRecyclerView);
+
+        notesRecyclerView.setHasFixedSize(true);
+        notesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         tripNotes = new ArrayList<>();
         tripNotes.add("first Note");
         tripNotes.add("second Note");
         tripNotes.add("third Note");
+
+        final NoteAdapter adapter = new NoteAdapter(getContext(),tripNotes,notesRecyclerView);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // gotoAddTripActivity((AppCompatActivity) getActivity());
+                Log.i(TAG,"add new note");
+            }
+        });
+        final SwipeController swipeController = new SwipeController(new SwipeControllerAction() {
+            @Override
+            public void onLeftClicked(int position) {
+                Toast.makeText(getContext(), "Go to edit activity", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onRightClicked(int position) {
+                adapter.noteDataList.remove(position);
+                adapter.notifyItemRemoved(position);
+                adapter.notifyItemRangeRemoved(position, adapter.getItemCount());
+            }
+        });
+
+        notesRecyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 2));
+        ItemTouchHelper helper = new ItemTouchHelper(swipeController);
+        helper.attachToRecyclerView(notesRecyclerView);
+        notesRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
+
+       notesRecyclerView.setAdapter(adapter);
+
+
 
         addNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
