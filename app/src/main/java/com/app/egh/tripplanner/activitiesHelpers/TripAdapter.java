@@ -65,8 +65,8 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
         Trip tripData = tripDataList.get(position);
         holder.imageView.setImageResource(R.mipmap.icon3);
         holder.tripNameTextView.setText(tripData.getTrip_name());
-        holder.startLocationTextView.setText(tripData.getStart_name().toString());
-        holder.destinationTextView.setText(tripData.getEnd_name().toString());
+        holder.startLocationTextView.setText(tripData.getStart_name());
+        holder.destinationTextView.setText(tripData.getEnd_name());
     }
 
     @Override

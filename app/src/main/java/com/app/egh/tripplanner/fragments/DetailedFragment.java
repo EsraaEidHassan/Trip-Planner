@@ -9,11 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.egh.tripplanner.R;
+import com.app.egh.tripplanner.activities.DetailedActivity;
+import com.app.egh.tripplanner.activities.EditTripActivity;
 import com.app.egh.tripplanner.data.model.Trip;
 
 /**
@@ -29,7 +32,10 @@ public class DetailedFragment extends Fragment {
     TextView trip_date_time;
     ImageView repeated;
     ImageView roundTrip;
+    Button editTrip;
     LinearLayout notes;
+
+    Trip trip;
 
     public DetailedFragment() {
         // Required empty public constructor
@@ -49,9 +55,10 @@ public class DetailedFragment extends Fragment {
         repeated = view.findViewById(R.id.trip_repeated);
         roundTrip = view.findViewById(R.id.trip_roundTrip);
         notes = view.findViewById(R.id.trip_notes);
+        editTrip = view.findViewById(R.id.editTrip);
 
         Intent intent = getActivity().getIntent();
-        Trip trip = (Trip) intent.getSerializableExtra("trip");
+        trip = (Trip) intent.getSerializableExtra("trip");
 
         trip_name.setText(trip.getTrip_name());
         trip_from.setText("From: "+trip.getStart_name());
@@ -79,8 +86,23 @@ public class DetailedFragment extends Fragment {
             Log.i(TAG , "note "+i);
         }
 
+        editTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToEditActivity();
+            }
+        });
+
         Log.i(TAG , "trip title : "+trip.getTrip_name());
         return view;
     }
+
+    private void goToEditActivity(){
+        Intent intent = new Intent(getActivity(), EditTripActivity.class);
+        intent.putExtra("trip",trip);
+        startActivity(intent);
+    }
+
+    
 
 }

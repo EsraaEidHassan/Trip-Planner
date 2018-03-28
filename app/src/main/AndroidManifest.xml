@@ -20,10 +20,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.AddTripActivity" />
-        <activity android:name=".activities.DetailedActivity"></activity>
+        <activity android:name=".activities.DetailedActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyADKPvGdtQWeJJ2aLccpEUcNqgrG0SySns"/>
+            android:value="AIzaSyADKPvGdtQWeJJ2aLccpEUcNqgrG0SySns" />
+
+        <activity android:name=".activities.EditTripActivity"></activity>
     </application>
 
 </manifest>
