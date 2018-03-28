@@ -6,23 +6,12 @@
 
 
     <EditText
-        android:id="@+id/username_signup"
+        android:id="@+id/email_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_margin="15dp"
-        android:ems="10"
-        android:hint="@string/username"
-        android:inputType="textPersonName"
-        android:padding="15dp" />
-
-    <EditText
-        android:id="@+id/email_signup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/username_signup"
-        android:layout_below="@+id/username_signup"
         android:ems="10"
         android:hint="@string/EmailAddress"
         android:inputType="textEmailAddress"
@@ -48,6 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/password_signup"
         android:layout_below="@+id/password_signup"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="@string/confirmPassword"
         android:inputType="textPassword"
@@ -83,30 +75,20 @@
         android:id="@+id/fbSignup"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignTop="@+id/textView2"
-        android:layout_toEndOf="@+id/signInFromSignUp"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignEnd="@+id/signupBtn"
         android:background="@drawable/fb"
         android:padding="5dp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/goto_signIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/signupBtn"
         android:layout_below="@+id/textView2"
-        android:layout_marginTop="15dp"
-        android:text="@string/alreadyUser"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/signInFromSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView4"
         android:layout_centerHorizontal="true"
-        android:padding="5dp"
-        android:text="@string/signIn"
+        android:layout_marginTop="15dp"
+        android:text="@string/alreadyRegistered"
         android:textColor="@color/colorAccent"
         android:textSize="18sp" />
+
 </RelativeLayout>

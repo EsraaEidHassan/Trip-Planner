@@ -16,5 +16,5 @@
     <string name="username">User Name</string>
     <string name="signup">Sign Up</string>
     <string name="OrSignUpWith">Or sign up with</string>
-    <string name="alreadyUser">Already a user?</string>
+    <string name="alreadyRegistered">Already Registered? Sign in here</string>
 </resources>

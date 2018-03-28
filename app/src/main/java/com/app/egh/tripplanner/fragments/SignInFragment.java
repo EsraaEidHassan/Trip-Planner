@@ -43,6 +43,7 @@ public class SignInFragment extends Fragment {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getActivity().finish();
                 //make sure of user credential then login
                 Intent intent = new Intent(getContext(), HomeActivity.class);
                 startActivity(intent);
@@ -52,6 +53,7 @@ public class SignInFragment extends Fragment {
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getActivity().finish();
                 Intent intent = new Intent(getContext(), SignUpActivity.class);
                 startActivity(intent);
             }
