@@ -144,6 +144,34 @@ public class Adapter {
 
     }
 
+    public long updateTrip(Trip trip){
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(TripTable.TRIP_COLUMN_NAME,trip.getTrip_name());
+        contentValues.put(TripTable.TRIP_COLUMN_START_POINT_LAT,trip.getStart_lat()+"");
+        contentValues.put(TripTable.TRIP_COLUMN_START_POINT_LONG,trip.getStart_long()+"");
+        contentValues.put(TripTable.TRIP_COLUMN_START_POINT_NAME,trip.getStart_name());
+        contentValues.put(TripTable.TRIP_COLUMN_END_POINT_LAT,trip.getEnd_lat()+"");
+        contentValues.put(TripTable.TRIP_COLUMN_END_POINT_LONG,trip.getEnd_long()+"");
+        contentValues.put(TripTable.TRIP_COLUMN_END_POINT_NAME,trip.getEnd_name());
+        contentValues.put(TripTable.TRIP_COLUMN_DATE_TIME, fromDateToString (trip.getDate_time())); // may cause problem
+
+        if(trip.isRepeated())
+            contentValues.put(TripTable.TRIP_COLUMN_REPEATED,1);
+        else
+            contentValues.put(TripTable.TRIP_COLUMN_REPEATED,0);
+        if(trip.isRoundtrip())
+            contentValues.put(TripTable.TRIP_COLUMN_ROUNDTRIP,1);
+        else
+            contentValues.put(TripTable.TRIP_COLUMN_ROUNDTRIP,0);
+
+        long rowID = sqLiteDatabase.update(TripTable.TRIP_TABLE_NAME, contentValues , TripTable.TRIP_COLUMN_ID + " = " + trip.getTrip_id(), null);
+        sqLiteDatabase.close(); // important
+        return rowID; // trip id
+
+    }
+
     public static String fromDateToString(Date date){
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

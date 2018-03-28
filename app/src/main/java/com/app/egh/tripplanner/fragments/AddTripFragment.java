@@ -191,7 +191,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                     Log.i(TAG,"trip id : "+trip_id);
                     myAdapter.insert_Notes(newTrip);
 
-                    if(validate())
+                    if(validate()) // edit this to include the code of adding trip !
                         gotoHomeActivity((AppCompatActivity) getActivity());
                 }
         });
