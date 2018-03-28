@@ -29,12 +29,18 @@ public class SwipeController extends Callback {
 
     private Boolean swipeBack= false;
     private ButtonsState buttonShowedState = ButtonsState.GONE;
-    private static final float buttonWidth = 300;
+    private static  float buttonWidth;
     private RecyclerView.ViewHolder currentItemViewHolder = null;
     private SwipeControllerAction buttonsActions = null;
-
-    public SwipeController(SwipeControllerAction buttonsActions) {
+    private int tempX;
+    private int tempY;
+    private float textSize;
+    public SwipeController(int buttonWidth, float textSize, int tempX , int tempY, SwipeControllerAction buttonsActions) {
+        this.tempX = tempX;
+        this.tempY = tempY;
         this.buttonsActions = buttonsActions;
+        this.buttonWidth = buttonWidth;
+        this.textSize = textSize;
     }
 
 
@@ -181,7 +187,7 @@ public class SwipeController extends Callback {
 
         buttonInstance = null;
         if (buttonShowedState == ButtonsState.LEFT_VISIBLE) {
-            RectF leftButton = new RectF(itemView.getLeft()+10, itemView.getTop()+15, itemView.getLeft() + buttonWidthWithoutPadding, itemView.getTop()+315);
+            RectF leftButton = new RectF(itemView.getLeft()+tempX, itemView.getTop()+tempX, itemView.getLeft() + buttonWidthWithoutPadding, itemView.getTop()+tempY);
             p.setColor(Color.parseColor("#009688"));
             c.drawRoundRect(leftButton, corners, corners, p);
             drawText("EDIT", c, leftButton, p);
@@ -189,7 +195,7 @@ public class SwipeController extends Callback {
             buttonInstance = leftButton;
         }
         else if (buttonShowedState == ButtonsState.RIGHT_VISIBLE) {
-            RectF rightButton = new RectF(itemView.getRight() - buttonWidthWithoutPadding, itemView.getTop()+15, itemView.getRight()-15, itemView.getTop()+315);
+            RectF rightButton = new RectF(itemView.getRight() - buttonWidthWithoutPadding, itemView.getTop()+tempX, itemView.getRight()-tempX, itemView.getTop()+tempY);
             p.setColor(Color.parseColor("#ff4081"));
             c.drawRoundRect(rightButton, corners, corners, p);
             drawText("DELETE", c, rightButton, p);
@@ -200,7 +206,7 @@ public class SwipeController extends Callback {
     }
 
     private void drawText(String text, Canvas c, RectF button, Paint p) {
-        float textSize = 60;
+       // float textSize = 60;
         p.setColor(Color.WHITE);
         p.setAntiAlias(true);
         p.setTextSize(textSize);

@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        final SwipeController swipeController = new SwipeController(new SwipeControllerAction() {
+        final SwipeController swipeController = new SwipeController(300,60,15,315,new SwipeControllerAction() {
             @Override
             public void onLeftClicked(int position) {
                 Toast.makeText(getContext(), "Go to edit activity", Toast.LENGTH_LONG).show();

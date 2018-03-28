@@ -126,7 +126,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                 Log.i(TAG,"add new note");
             }
         });
-        final SwipeController swipeController = new SwipeController(new SwipeControllerAction() {
+        final SwipeController swipeController = new SwipeController(200,30,15, 75, new SwipeControllerAction() {
             @Override
             public void onLeftClicked(int position) {
                 Toast.makeText(getContext(), "Go to edit activity", Toast.LENGTH_LONG).show();
