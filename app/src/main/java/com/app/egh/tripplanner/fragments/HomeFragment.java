@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
     FirebaseAuth firebaseAuth;
 
     // variables
-    public  static List<Trip> allTrips;
+    public List<Trip> allTrips;
     Adapter dbAdapter;
 
     public HomeFragment() {
@@ -106,6 +106,12 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onRightClicked(int position) {
+                Boolean isDeleted = dbAdapter.deleteTrip(allTrips.get(position).getTrip_id());
+                Log.i(TAG,"trip id: "+allTrips.get(position).getTrip_id());
+                if(isDeleted)
+                    Toast.makeText(getContext(),"Trip Delete Successfuly !"+position,Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(getContext(),"Cann't delete this Trip !",Toast.LENGTH_LONG).show();
                 adapter.tripDataList.remove(position);
                 adapter.notifyItemRemoved(position);
                 adapter.notifyItemRangeRemoved(position, adapter.getItemCount());
@@ -113,12 +119,6 @@ public class HomeFragment extends Fragment {
                     emptyLabel.setVisibility(View.INVISIBLE);
                 else
                     emptyLabel.setVisibility(View.VISIBLE);
-
-                Boolean isDeleted = dbAdapter.deleteTrip(allTrips.get(position).getTrip_id());
-                if(isDeleted)
-                    Toast.makeText(getContext(),"Trip Delete Successfuly !",Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(getContext(),"Cann't delete this Trip !",Toast.LENGTH_LONG).show();
             }
         });
 
@@ -139,6 +139,7 @@ public class HomeFragment extends Fragment {
 
     private void gotoAddTripActivity(AppCompatActivity activity){
 
+        getActivity().finish();
         Intent intent = new Intent(activity, AddTripActivity.class);
         startActivity(intent);
 

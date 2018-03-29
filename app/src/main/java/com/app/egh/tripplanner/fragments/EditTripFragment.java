@@ -288,6 +288,7 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
 
     private void goToDetailedActivity(){
 
+        getActivity().finish();
         Intent intent = new Intent(getActivity(), DetailedActivity.class);
         intent.putExtra("trip",trip);
         startActivity(intent);

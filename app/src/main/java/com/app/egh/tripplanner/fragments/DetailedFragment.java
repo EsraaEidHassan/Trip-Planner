@@ -98,6 +98,7 @@ public class DetailedFragment extends Fragment {
     }
 
     private void goToEditActivity(){
+        getActivity().finish();
         Intent intent = new Intent(getActivity(), EditTripActivity.class);
         intent.putExtra("trip",trip);
         startActivity(intent);

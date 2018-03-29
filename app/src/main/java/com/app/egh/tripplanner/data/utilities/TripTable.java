@@ -19,6 +19,7 @@ public class TripTable {
     public static final String TRIP_COLUMN_DATE_TIME = "trip_date_time";
     public static final String TRIP_COLUMN_REPEATED = "repeated";
     public static final String TRIP_COLUMN_ROUNDTRIP = "roundtrip";
+    public static final String TRIP_COLUMN_STARTED = "started";
 
     public static String createTable(){
         String createTable_DDL = "CREATE TABLE IF NOT EXISTS "
@@ -33,6 +34,7 @@ public class TripTable {
                 + TRIP_COLUMN_END_POINT_NAME + " VARCHAR(50), "
                 + TRIP_COLUMN_DATE_TIME + " TEXT, "
                 + TRIP_COLUMN_REPEATED + " BOOLEAN, "
+                + TRIP_COLUMN_STARTED + " BOOLEAN, "
                 + TRIP_COLUMN_ROUNDTRIP + " BOOLEAN " + ")";
 
         return createTable_DDL;

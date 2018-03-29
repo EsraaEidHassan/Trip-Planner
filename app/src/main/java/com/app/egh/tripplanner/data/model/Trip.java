@@ -19,8 +19,9 @@ public class Trip implements Serializable {
     private double end_long;
     private String end_name;
     private Date date_time;
-    private boolean repeated;
+    private boolean repeated; // enter zero or one in SQLite 3
     private boolean roundtrip; // enter zero or one in SQLite 3
+    private boolean started; // enter zero or one in SQLite 3
     private List<String> notes;
 
 
@@ -100,6 +101,10 @@ public class Trip implements Serializable {
         return roundtrip;
     }
 
+    public boolean isStarted() {
+        return started;
+    }
+
     public List<String> getNotes() {
         return notes;
     }
@@ -147,6 +152,10 @@ public class Trip implements Serializable {
 
     public void setRoundtrip(boolean roundtrip) {
         this.roundtrip = roundtrip;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
     }
 
     public void setNotes(List<String> notes) {
