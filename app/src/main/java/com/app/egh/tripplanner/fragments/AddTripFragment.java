@@ -184,15 +184,16 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                 dateAndTime = c.getTime();
                 Log.i("time"  ,""+dateAndTime);
 
-                    Trip newTrip = new Trip(tripNameField.getText().toString(), (long)startLatit, (long)startLongit, startName, (long)endLatit, (long)endLongit, endName,dateAndTime, repeat,roundTrip, tripNotes);
+                if(validate()) {
+                    Trip newTrip = new Trip(tripNameField.getText().toString(), (long) startLatit, (long) startLongit, startName, (long) endLatit, (long) endLongit, endName, dateAndTime, repeat, roundTrip, tripNotes);
                     Adapter myAdapter = new Adapter(getActivity());
                     long trip_id = myAdapter.insert_trip(newTrip);
                     newTrip.setTrip_id((int) trip_id);
-                    Log.i(TAG,"trip id : "+trip_id);
+                    Log.i(TAG, "trip id : " + trip_id);
                     myAdapter.insert_Notes(newTrip);
 
-                    if(validate()) // edit this to include the code of adding trip !
-                        gotoHomeActivity((AppCompatActivity) getActivity());
+                    gotoHomeActivity((AppCompatActivity) getActivity());
+                }
                 }
         });
 
