@@ -1,5 +1,6 @@
 package com.app.egh.tripplanner.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -14,6 +15,10 @@ import android.widget.Toast;
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.HomeActivity;
 import com.app.egh.tripplanner.activities.SignUpActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SignInFragment extends Fragment {
@@ -24,6 +29,11 @@ public class SignInFragment extends Fragment {
     Button signIn;
     Button fbLogin;
     TextView createAccount;
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+
+    private GoogleSignInClient mGoogleSignInClient;
+
     public SignInFragment() {
         // Required empty public constructor
     }
@@ -60,9 +70,21 @@ public class SignInFragment extends Fragment {
         });
 
         fbLogin.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("RestrictedApi")
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Sign In with facebook", Toast.LENGTH_LONG).show();
+               // Toast.makeText(getContext(), "Sign In with facebook", Toast.LENGTH_LONG).show();
+                GoogleSignInOptions gsn = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build();
+
+
+                mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gsn);
+
+                // [START initialize_auth]
+                mAuth = FirebaseAuth.getInstance();
+                // [END initialize_auth]
 
             }
         });
