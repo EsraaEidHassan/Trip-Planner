@@ -32,6 +32,8 @@ import com.app.egh.tripplanner.activitiesHelpers.SwipeControllerAction;
 import com.app.egh.tripplanner.activitiesHelpers.TripAdapter;
 import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +50,7 @@ public class HomeFragment extends Fragment {
     FloatingActionButton fab;
     RecyclerView recyclerView;
     TextView emptyLabel;
+    FirebaseAuth firebaseAuth;
 
     // variables
     public  static List<Trip> allTrips;
@@ -74,6 +77,8 @@ public class HomeFragment extends Fragment {
 
         // define variables
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         allTrips = new ArrayList<>();
         dbAdapter = new Adapter(getContext());
         allTrips = dbAdapter.getAllTrips();

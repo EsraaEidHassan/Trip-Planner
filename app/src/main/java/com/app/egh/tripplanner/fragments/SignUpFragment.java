@@ -60,6 +60,13 @@ public class SignUpFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        if(firebaseAuth.getCurrentUser() != null){
+            // user already signed in
+            getActivity().finish();
+            Intent intent = new Intent(getContext(), HomeActivity.class);
+            startActivity(intent);
+        }
+
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,10 +128,11 @@ public class SignUpFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        progressDialog.dismiss();
                         getActivity().finish();
                         Intent intent = new Intent(getContext(), HomeActivity.class);
                         startActivity(intent);
-                        progressDialog.dismiss();
+
                     } else {
                         Toast.makeText(getContext(), "Can't Register this user !", Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
