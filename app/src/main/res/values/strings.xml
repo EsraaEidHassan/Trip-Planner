@@ -8,7 +8,7 @@
     <string name="Password">Password</string>
     <string name="orLogin">Or login with</string>
     <string name="signIn">Sign in</string>
-    <string name="NotUser">Not a user?</string>
+    <string name="notUser">Don\'t Have account? sign up here</string>
     <string name="createAnAccount">Create an Account</string>
     <string name="end">dropoff</string>
     <string name="start">Start</string>

@@ -1,5 +1,6 @@
 package com.app.egh.tripplanner.activities;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,11 +21,15 @@ import com.app.egh.tripplanner.activitiesHelpers.SwipeControllerAction;
 import com.app.egh.tripplanner.activitiesHelpers.TripAdapter;
 import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
+
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +39,15 @@ public class HomeActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() == null){
+            //logged out
+            finish();
+            startActivity(new Intent(this,SignInActivity.class));
+        }
 
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        Toast.makeText(this,"Welcome "+firebaseUser.getEmail(),Toast.LENGTH_LONG).show();
         //=======================================================================//
 
        /* Trip trip = new TripData("ITI","Hadayek Elkobba","Smart village");
@@ -102,6 +115,13 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         }else if (id == R.id.action_sync) {
             // do action
+            return true;
+        }
+        else if (id == R.id.action_logout) {
+            // do action
+            firebaseAuth.signOut();
+            finish();
+            startActivity(new Intent(this,SignInActivity.class));
             return true;
         }
         return  super.onOptionsItemSelected(item);
