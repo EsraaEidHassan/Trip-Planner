@@ -306,6 +306,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
 
     private void gotoHomeActivity(AppCompatActivity activity){
 
+        getActivity().finish();
         Intent intent = new Intent(activity, HomeActivity.class);
         startActivity(intent);
 

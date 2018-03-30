@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.AddTripActivity;
 import com.app.egh.tripplanner.activities.DetailedActivity;
+import com.app.egh.tripplanner.activities.EditTripActivity;
 import com.app.egh.tripplanner.activities.HomeActivity;
 import com.app.egh.tripplanner.activitiesHelpers.MyDividerItemDecoration;
 import com.app.egh.tripplanner.activitiesHelpers.SwipeController;
@@ -101,7 +102,8 @@ public class HomeFragment extends Fragment {
         final SwipeController swipeController = new SwipeController(300,60,15,315,new SwipeControllerAction() {
             @Override
             public void onLeftClicked(int position) {
-                Toast.makeText(getContext(), "Go to edit activity", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), "Go to edit activity", Toast.LENGTH_LONG).show();
+                goToEditActivity(allTrips.get(position));
             }
 
             @Override
@@ -143,6 +145,12 @@ public class HomeFragment extends Fragment {
         Intent intent = new Intent(activity, AddTripActivity.class);
         startActivity(intent);
 
+    }
+
+    private void goToEditActivity(Trip trip){
+        Intent intent = new Intent(getActivity(), EditTripActivity.class);
+        intent.putExtra("trip",trip);
+        startActivity(intent);
     }
 
 }

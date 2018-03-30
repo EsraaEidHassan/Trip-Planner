@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         firebaseUser = firebaseAuth.getCurrentUser();
-        Toast.makeText(this,"Welcome "+firebaseUser.getEmail(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"Welcome "+firebaseUser.getEmail(),Toast.LENGTH_LONG).show();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         //=======================================================================//
