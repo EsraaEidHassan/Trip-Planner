@@ -26,7 +26,7 @@ enum ButtonsState {
 
 public class SwipeController extends Callback {
 
-
+    private boolean historyController = false;
     private Boolean swipeBack= false;
     private ButtonsState buttonShowedState = ButtonsState.GONE;
     private static  float buttonWidth;
@@ -43,6 +43,14 @@ public class SwipeController extends Callback {
         this.textSize = textSize;
     }
 
+    public SwipeController(boolean historyController, int buttonWidth, float textSize, int tempX , int tempY, SwipeControllerAction buttonsActions) {
+        this.tempX = tempX;
+        this.tempY = tempY;
+        this.buttonsActions = buttonsActions;
+        this.buttonWidth = buttonWidth;
+        this.textSize = textSize;
+        this.historyController = historyController;
+    }
 
     RectF buttonInstance;
     @Override
@@ -186,7 +194,7 @@ public class SwipeController extends Callback {
 
 
         buttonInstance = null;
-        if (buttonShowedState == ButtonsState.LEFT_VISIBLE) {
+        if (buttonShowedState == ButtonsState.LEFT_VISIBLE && !historyController) {
             RectF leftButton = new RectF(itemView.getLeft()+tempX, itemView.getTop()+tempX, itemView.getLeft() + buttonWidthWithoutPadding, itemView.getTop()+tempY);
             p.setColor(Color.parseColor("#009688"));
             c.drawRoundRect(leftButton, corners, corners, p);

@@ -15,7 +15,7 @@
         <activity
             android:name=".activities.HomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.AddTripActivity" />
         <activity android:name=".activities.DetailedActivity" />
 
@@ -26,6 +26,7 @@
         <activity android:name=".activities.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -34,9 +35,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyADKPvGdtQWeJJ2aLccpEUcNqgrG0SySns" />
 
-        <activity android:name=".activities.EditTripActivity"></activity>
-        <activity android:name=".activities.SignUpActivity">
-        </activity>
+        <activity android:name=".activities.EditTripActivity" />
+        <activity android:name=".activities.SignUpActivity"></activity>
+        <activity android:name=".activities.HistoryActivity"></activity>
     </application>
 
 </manifest>

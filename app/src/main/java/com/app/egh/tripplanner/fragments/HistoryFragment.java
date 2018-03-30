@@ -1,16 +1,10 @@
 package com.app.egh.tripplanner.fragments;
 
 
-import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -18,15 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.egh.tripplanner.R;
-import com.app.egh.tripplanner.activities.AddTripActivity;
-import com.app.egh.tripplanner.activities.DetailedActivity;
-import com.app.egh.tripplanner.activities.EditTripActivity;
-import com.app.egh.tripplanner.activities.HomeActivity;
 import com.app.egh.tripplanner.activitiesHelpers.MyDividerItemDecoration;
 import com.app.egh.tripplanner.activitiesHelpers.SwipeController;
 import com.app.egh.tripplanner.activitiesHelpers.SwipeControllerAction;
@@ -39,16 +28,14 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class HistoryFragment extends Fragment {
 
-    private static final String TAG = "HomeFragment";
+    private static final String TAG = "HistoryFragment";
     // views
 
-    FloatingActionButton fab;
     RecyclerView recyclerView;
     TextView emptyLabel;
     //FirebaseAuth firebaseAuth;
@@ -57,7 +44,7 @@ public class HomeFragment extends Fragment {
     public List<Trip> allTrips;
     Adapter dbAdapter;
 
-    public HomeFragment() {
+    public HistoryFragment() {
         // Required empty public constructor
     }
 
@@ -65,11 +52,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_home, container, false);
-
+        View view =  inflater.inflate(R.layout.fragment_history, container, false);
         // define views
-        fab = view.findViewById(R.id.addTripBtn);
         recyclerView = view.findViewById(R.id.recyclerView);
         emptyLabel = view.findViewById(R.id.noTripsLabel);
 
@@ -82,7 +66,7 @@ public class HomeFragment extends Fragment {
         //FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         allTrips = new ArrayList<>();
         dbAdapter = new Adapter(getContext());
-        allTrips = dbAdapter.getUpcomingTrips();
+        allTrips = dbAdapter.getHistoryTrips();
 
         if(allTrips.size() > 0)
             emptyLabel.setVisibility(View.INVISIBLE);
@@ -92,19 +76,7 @@ public class HomeFragment extends Fragment {
         final TripAdapter adapter = new TripAdapter(getContext(),allTrips,recyclerView);
 
         //add listiners to views
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gotoAddTripActivity((AppCompatActivity) getActivity());
-            }
-        });
-
-        final SwipeController swipeController = new SwipeController(300,60,15,315,new SwipeControllerAction() {
-            @Override
-            public void onLeftClicked(int position) {
-                //Toast.makeText(getContext(), "Go to edit activity", Toast.LENGTH_LONG).show();
-                goToEditActivity(allTrips.get(position));
-            }
+        final SwipeController swipeController = new SwipeController(true,300,60,15,315,new SwipeControllerAction() {
 
             @Override
             public void onRightClicked(int position) {
@@ -137,20 +109,6 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         return view;
-    }
-
-    private void gotoAddTripActivity(AppCompatActivity activity){
-
-        getActivity().finish();
-        Intent intent = new Intent(activity, AddTripActivity.class);
-        startActivity(intent);
-
-    }
-
-    private void goToEditActivity(Trip trip){
-        Intent intent = new Intent(getActivity(), EditTripActivity.class);
-        intent.putExtra("trip",trip);
-        startActivity(intent);
     }
 
 }
