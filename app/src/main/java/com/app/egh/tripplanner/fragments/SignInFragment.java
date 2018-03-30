@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,26 +21,26 @@ import android.widget.Toast;
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.HomeActivity;
 import com.app.egh.tripplanner.activities.SignUpActivity;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.app.egh.tripplanner.data.model.Adapter;
-import com.app.egh.tripplanner.data.model.Trip;
 import com.app.egh.tripplanner.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.List;
-
 
 public class SignInFragment extends Fragment {
 
@@ -50,22 +51,17 @@ public class SignInFragment extends Fragment {
     Button signIn;
     Button fbLogin;
     TextView createAccount;
-    private FirebaseAuth mAuth;
-    // [END declare_auth]
 
-    private GoogleSignInClient mGoogleSignInClient;
-
-
+    private GoogleApiClient mGoogleApiClient;
     ProgressDialog progressDialog;
-
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     DatabaseReference databaseReference;
+    private static final int RC_SIGN_IN = 9001;
 
     public SignInFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,7 +79,6 @@ public class SignInFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
         if(firebaseAuth.getCurrentUser() != null){
             // user already signed in
             getActivity().finish();
@@ -116,21 +111,37 @@ public class SignInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                // Toast.makeText(getContext(), "Sign In with facebook", Toast.LENGTH_LONG).show();
-                GoogleSignInOptions gsn = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestIdToken(getString(R.string.default_web_client_id))
-                        .requestEmail()
-                        .build();
-
-
-                mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gsn);
-
-                // [START initialize_auth]
-                mAuth = FirebaseAuth.getInstance();
-                // [END initialize_auth]
+                startGoogleConfigurations();
+                signInWithGoogle();
 
             }
         });
         return view;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("onActivityResult child");
+        System.out.println("RequestCode: " + requestCode);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                System.out.println("Account ");
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                Log.w(TAG, "Google sign in failed", e);
+            }
+        }
+
+        else{
+            System.out.println("Problem with request code");
+        }
     }
 
     private void signin(){
@@ -225,4 +236,47 @@ public class SignInFragment extends Fragment {
         }
     }
 
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        System.out.println("firebaseAuthWithGoogle");
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "signInWithCredential:success");
+                            Toast.makeText(getContext(), "signInWithCredential:success", Toast.LENGTH_LONG).show();
+
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                          //  Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Can't sign in !", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+                });
+    }
+
+    private void startGoogleConfigurations(){
+
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(getContext())
+                .enableAutoManage(getActivity() /* FragmentActivity */, null /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+                .build();
+    }
+
+    private void signInWithGoogle(){
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        getActivity().startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
 }
