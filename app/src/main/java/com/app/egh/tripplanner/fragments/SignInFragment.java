@@ -172,12 +172,8 @@ public class SignInFragment extends Fragment {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
 
-                        progressDialog.dismiss();
                         getTripsFromFireBase();
-                        getActivity().finish();
-                        Intent intent = new Intent(getContext(), HomeActivity.class);
-                        startActivity(intent);
-
+                        progressDialog.dismiss();
                     } else {
                         progressDialog.dismiss();
                         Toast.makeText(getContext(), "Can't sign in !", Toast.LENGTH_LONG).show();
@@ -203,22 +199,26 @@ public class SignInFragment extends Fragment {
 
         if(isNetworkConnected()) {
 
-            progressDialog.setMessage("Retrieving Trips ... ");
-            progressDialog.show();
+            //progressDialog.setMessage("Retrieving Trips ... ");
+            //progressDialog.show();
 
-            final ValueEventListener userListener = new ValueEventListener() {
+             ValueEventListener userListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // Get Post object and use the values to update the UI
-                    User user = dataSnapshot.getValue(User.class);
+                    firebaseUser = firebaseAuth.getCurrentUser();
+                    User user = dataSnapshot.child(firebaseUser.getUid()).getValue(User.class);
                     if (user != null) {
                         if(user.trips != null) {
                             for (int i = 0; i < user.trips.size(); i++) {
                                 dbAdapter.insert_trip(user.trips.get(i));
                             }
+                            getActivity().finish();
+                            Intent intent = new Intent(getContext(), HomeActivity.class);
+                            startActivity(intent);
                         }
                     }
-                    progressDialog.dismiss();
+                    //progressDialog.dismiss();
                     // ...
                 }
 
@@ -226,11 +226,11 @@ public class SignInFragment extends Fragment {
                 public void onCancelled(DatabaseError databaseError) {
                     // Getting Post failed, log a message
                     Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                    progressDialog.dismiss();
+                    //progressDialog.dismiss();
                     Toast.makeText(getContext(), "Cannot load trips !", Toast.LENGTH_LONG).show();
                 }
             };
-            databaseReference.addValueEventListener(userListener);
+            databaseReference.addListenerForSingleValueEvent(userListener);
         }else{
             Toast.makeText(getContext(), "Please check your connection !", Toast.LENGTH_LONG).show();
         }

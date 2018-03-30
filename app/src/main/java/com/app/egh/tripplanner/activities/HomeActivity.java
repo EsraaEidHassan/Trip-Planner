@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         firebaseUser = firebaseAuth.getCurrentUser();
-        Toast.makeText(this,"Welcome "+firebaseUser.getEmail(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"Welcome "+firebaseUser.getEmail(),Toast.LENGTH_LONG).show();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         //=======================================================================//
@@ -133,6 +133,7 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_history) {
             //do action
+            startActivity(new Intent(this,HistoryActivity.class));
             return true;
         }else if (id == R.id.action_sync) {
             // do action

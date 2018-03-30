@@ -108,6 +108,30 @@ public class Adapter {
         return trips;
     }
 
+    public List<Trip> getHistoryTrips(){
+        List<Trip> trips = getAllTrips();
+        List<Trip> old_trips = new ArrayList<>();
+
+        for(int i=0; i<trips.size();i++){
+
+            if(trips.get(i).isStarted() || isPast(trips.get(i).getDate_time()))
+                old_trips.add(trips.get(i));
+        }
+        return old_trips;
+    }
+
+    public List<Trip> getUpcomingTrips(){
+        List<Trip> trips = getAllTrips();
+        List<Trip> upcoming_trips = new ArrayList<>();
+
+        for(int i=0; i<trips.size();i++){
+
+            if( !trips.get(i).isStarted() && !isPast(trips.get(i).getDate_time()))
+                upcoming_trips.add(trips.get(i));
+        }
+        return upcoming_trips;
+    }
+
     public List<String> getAllNotes(int trip_id){
         List<String> notes = new ArrayList<>();
 
@@ -212,6 +236,16 @@ public class Adapter {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean isPast(Date date){
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //Date strDate = sdf.parse(valid_until);
+        if (System.currentTimeMillis() > date.getTime()) {
+            return true;
+        }else{
+            return false;
+        }
     }
 }
 
