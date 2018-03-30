@@ -149,9 +149,9 @@ public class HomeFragment extends Fragment {
     {
         AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getContext())
                 //set message, title, and icon
-                .setTitle("Delete")
-                .setMessage("Are you sure?")
-                .setIcon(R.drawable.yes)
+                .setTitle("Delete trip")
+                .setMessage("Are you sure? ")
+                .setIcon(R.drawable.ic_delete_forever_black_24dp)
 
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
