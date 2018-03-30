@@ -250,11 +250,14 @@ public class SignInFragment extends Fragment {
                             Log.d(TAG, "signInWithCredential:success");
                             Toast.makeText(getContext(), "signInWithCredential:success", Toast.LENGTH_LONG).show();
 
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            //FirebaseUser user = firebaseAuth.getCurrentUser();
+                            getTripsFromFireBase();
+                          //  Intent intent = new Intent(getContext(), HomeActivity.class);
+                            //startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                          //  Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                          //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             Toast.makeText(getContext(), "Can't sign in !", Toast.LENGTH_LONG).show();
 
                         }
