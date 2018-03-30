@@ -5,6 +5,17 @@
     tools:context="com.app.egh.tripplanner.fragments.SignUpFragment">
 
 
+    <TextView
+        android:id="@+id/goto_signIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signupBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="@string/alreadyRegistered"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp" />
+
     <EditText
         android:id="@+id/email_signup"
         android:layout_width="match_parent"
@@ -58,37 +69,5 @@
         android:text="@string/signup"
         android:textColor="@color/cardview_light_background"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/signupBtn"
-        android:layout_marginTop="16dp"
-        android:layout_toStartOf="@+id/fbSignup"
-        android:padding="5dp"
-        android:text="@string/OrSignUpWith"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/fbSignup"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_alignEnd="@+id/signupBtn"
-        android:background="@drawable/fb"
-        android:padding="5dp" />
-
-    <TextView
-        android:id="@+id/goto_signIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:text="@string/alreadyRegistered"
-        android:textColor="@color/colorAccent"
-        android:textSize="18sp" />
 
 </RelativeLayout>

@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,7 +48,7 @@ public class SignInFragment extends Fragment {
     TextView emailAddress;
     TextView password;
     Button signIn;
-    Button fbLogin;
+    Button googleLogin;
     TextView createAccount;
 
     private GoogleApiClient mGoogleApiClient;
@@ -70,7 +69,7 @@ public class SignInFragment extends Fragment {
         emailAddress = view.findViewById(R.id.emailText);
         password = view.findViewById(R.id.passwordText);
         signIn = view.findViewById(R.id.signInBtn);
-        fbLogin = view.findViewById(R.id.fbLoginBtn);
+        googleLogin = view.findViewById(R.id.fbLoginBtn);
         createAccount = view.findViewById(R.id.goto_signup);
         createAccount.setPaintFlags(createAccount.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
@@ -106,7 +105,7 @@ public class SignInFragment extends Fragment {
             }
         });
 
-        fbLogin.setOnClickListener(new View.OnClickListener() {
+        googleLogin.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("RestrictedApi")
             @Override
             public void onClick(View v) {
@@ -239,7 +238,8 @@ public class SignInFragment extends Fragment {
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-
+        progressDialog.setMessage("Sign in User ... ");
+        progressDialog.show();
         System.out.println("firebaseAuthWithGoogle");
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential)
@@ -248,18 +248,14 @@ public class SignInFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
-                            Toast.makeText(getContext(), "signInWithCredential:success", Toast.LENGTH_LONG).show();
+                           // Toast.makeText(getContext(), "signInWithCredential:success", Toast.LENGTH_LONG).show();
 
-                            //FirebaseUser user = firebaseAuth.getCurrentUser();
                             getTripsFromFireBase();
-                          //  Intent intent = new Intent(getContext(), HomeActivity.class);
-                            //startActivity(intent);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                          //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            Toast.makeText(getContext(), "Can't sign in !", Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
 
+                        } else {
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext(), "Can't sign in !", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
