@@ -196,7 +196,7 @@ public class SwipeController extends Callback {
 
         buttonInstance = null;
         if (buttonShowedState == ButtonsState.LEFT_VISIBLE && !historyController) {
-            RectF leftButton = new RectF(itemView.getLeft()+tempX, itemView.getTop()+tempX, itemView.getLeft() + buttonWidthWithoutPadding, itemView.getTop()+tempY);
+            RectF leftButton = new RectF(itemView.getLeft()+tempX, itemView.getTop()+tempX, itemView.getLeft() + buttonWidthWithoutPadding, itemView.getBottom()-10);
             p.setColor(Color.parseColor("#009688"));
             c.drawRoundRect(leftButton, corners, corners, p);
             drawText("EDIT", c, leftButton, p);
@@ -204,7 +204,7 @@ public class SwipeController extends Callback {
             buttonInstance = leftButton;
         }
         else if (buttonShowedState == ButtonsState.RIGHT_VISIBLE) {
-            RectF rightButton = new RectF(itemView.getRight() - buttonWidthWithoutPadding, itemView.getTop()+tempX, itemView.getRight()-tempX, itemView.getTop()+tempY);
+            RectF rightButton = new RectF(itemView.getRight() - buttonWidthWithoutPadding, itemView.getTop()+tempX, itemView.getRight()-tempX, itemView.getBottom()-10);
             p.setColor(Color.parseColor("#ff4081"));
             c.drawRoundRect(rightButton, corners, corners, p);
             drawText("DELETE", c, rightButton, p);
