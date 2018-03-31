@@ -3,6 +3,7 @@ package com.app.egh.tripplanner.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,11 +14,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.DetailedActivity;
 import com.app.egh.tripplanner.activities.EditTripActivity;
+import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
+
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +38,7 @@ public class DetailedFragment extends Fragment {
     ImageView repeated;
     ImageView roundTrip;
     Button editTrip;
+    Button startTrip;
     LinearLayout notes;
 
     Trip trip;
@@ -56,7 +62,7 @@ public class DetailedFragment extends Fragment {
         roundTrip = view.findViewById(R.id.trip_roundTrip);
         notes = view.findViewById(R.id.trip_notes);
         editTrip = view.findViewById(R.id.editTrip);
-
+        startTrip = view.findViewById(R.id.startTripFromDetails);
         Intent intent = getActivity().getIntent();
         trip = (Trip) intent.getSerializableExtra("trip");
 
@@ -93,6 +99,26 @@ public class DetailedFragment extends Fragment {
             }
         });
 
+        startTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  Toast.makeText( context, tripData.getTrip_name(), Toast.LENGTH_LONG).show();
+                //int itemPosition = recyclerView.getChildLayoutPosition(v);
+                //Trip tripData = tripDataList.get(itemPosition);
+                // Trip tripData = tripDataList.get(0);
+                trip.setStarted(true);
+                Adapter dbAdapter = new Adapter(getContext());
+
+                dbAdapter.updateTrip(trip);
+
+                //Toast.makeText( context, "Start trip activity", Toast.LENGTH_LONG).show();
+
+                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", trip.getStart_lat(), trip.getStart_long(), trip.getStart_name(),  trip.getEnd_lat() , trip.getEnd_long(), trip.getEnd_name());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                intent.setPackage("com.google.android.apps.maps");
+                getContext().startActivity(intent);
+            }
+        });
         Log.i(TAG , "trip title : "+trip.getTrip_name());
         return view;
     }

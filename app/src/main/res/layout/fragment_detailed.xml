@@ -8,16 +8,16 @@
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.v7.widget.CardView
             android:id="@+id/cardview_trip"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginTop="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
+            android:layout_marginTop="@dimen/card_margin"
             android:elevation="100dp"
             card_view:cardBackgroundColor="@android:color/white"
             card_view:cardCornerRadius="@dimen/card_radius">
@@ -38,7 +38,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Trip Name"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <View
@@ -50,29 +50,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="10dp">
+                    android:paddingTop="20dp">
 
                     <TextView
                         android:id="@+id/trip_from"
-                        android:text="From: from_place"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="5dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_width="wrap_content" />
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp"
+                        android:text="From: from_place" />
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@android:color/darker_gray" />
+
                     <TextView
                         android:id="@+id/trip_to"
-                        android:text="To: to_place"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="5dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_width="wrap_content" />
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp"
+                        android:text="To: to_place" />
 
                 </LinearLayout>
 
@@ -85,10 +87,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="10dp">
+                    android:paddingTop="20dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -100,14 +102,15 @@
                             android:layout_height="match_parent"
                             android:paddingBottom="5dp"
                             android:paddingTop="10dp"
-                            android:src="@drawable/datetime"/>
+                            android:src="@drawable/datetime" />
+
                         <TextView
                             android:id="@+id/trip_date_time"
-                            android:text="Date: 12/5/2012"
-                            android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="5dp"
                             android:paddingTop="10dp"
-                            android:paddingBottom="5dp"/>
+                            android:text="Date: 12/5/2012" />
 
                     </LinearLayout>
 
@@ -115,6 +118,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@android:color/darker_gray" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -122,17 +126,18 @@
 
                         <ImageView
                             android:id="@+id/trip_repeated"
-                            android:layout_height="match_parent"
                             android:layout_width="30dp"
-                            android:paddingTop="10dp"
+                            android:layout_height="match_parent"
                             android:paddingBottom="5dp"
-                            android:src="@drawable/yes"/>
-                        <TextView
-                            android:text="Repeated"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
                             android:paddingTop="10dp"
-                            android:paddingBottom="5dp"/>
+                            android:src="@drawable/yes" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="5dp"
+                            android:paddingTop="10dp"
+                            android:text="Repeated" />
 
                     </LinearLayout>
 
@@ -140,6 +145,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@android:color/darker_gray" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -147,17 +153,18 @@
 
                         <ImageView
                             android:id="@+id/trip_roundTrip"
-                            android:layout_height="match_parent"
                             android:layout_width="30dp"
-                            android:paddingTop="10dp"
+                            android:layout_height="match_parent"
                             android:paddingBottom="5dp"
-                            android:src="@drawable/no"/>
-                        <TextView
-                            android:text="Round Trip"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
                             android:paddingTop="10dp"
-                            android:paddingBottom="5dp"/>
+                            android:src="@drawable/no" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="5dp"
+                            android:paddingTop="10dp"
+                            android:text="Round Trip" />
 
                     </LinearLayout>
 
@@ -174,8 +181,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginTop="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
+            android:layout_marginTop="@dimen/card_margin"
             android:elevation="100dp"
             card_view:cardBackgroundColor="@android:color/white"
             card_view:cardCornerRadius="@dimen/card_radius">
@@ -196,7 +203,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Notes"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <View
@@ -209,10 +216,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="10dp">
+                    android:paddingTop="20dp">
 
                     <!--<TextView
                         android:text="Note1"
@@ -248,11 +255,18 @@
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
         <Button
             android:id="@+id/editTrip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="EDIT TRIP"/>
+            android:text="@string/editTrip" />
+
+        <Button
+            android:id="@+id/startTripFromDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/startTrip" />
 
     </LinearLayout>
 

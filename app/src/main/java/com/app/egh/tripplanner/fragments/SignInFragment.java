@@ -110,8 +110,14 @@ public class SignInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                // Toast.makeText(getContext(), "Sign In with facebook", Toast.LENGTH_LONG).show();
-                startGoogleConfigurations();
-                signInWithGoogle();
+                if(isNetworkConnected()) {
+
+                    startGoogleConfigurations();
+                    signInWithGoogle();
+                }
+                else {
+                    Toast.makeText(getContext(), "Please check your connection !", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
@@ -263,7 +269,6 @@ public class SignInFragment extends Fragment {
 
     private void startGoogleConfigurations(){
 
-        if(isNetworkConnected()) {
 
             GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.default_web_client_id))
@@ -274,9 +279,7 @@ public class SignInFragment extends Fragment {
                     .enableAutoManage(getActivity() /* FragmentActivity */, null /* OnConnectionFailedListener */)
                     .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
                     .build();
-        }else {
-            Toast.makeText(getContext(), "Please check your connection !", Toast.LENGTH_LONG).show();
-        }
+
 
     }
 
