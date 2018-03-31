@@ -58,7 +58,7 @@
 
     <Button
         android:id="@+id/signupBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/confirmPassword_signup"
         android:layout_centerHorizontal="true"
@@ -68,6 +68,7 @@
         android:paddingRight="40dp"
         android:text="@string/signup"
         android:textColor="@color/cardview_light_background"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_margin="15dp"/>
 
 </RelativeLayout>
