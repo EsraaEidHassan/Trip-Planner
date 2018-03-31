@@ -50,6 +50,9 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
     Button editTrip;
     //LinearLayout notes;
 
+    PlaceAutocompleteFragment autocompleteFragmentStart;
+    PlaceAutocompleteFragment autocompleteFragmentEnd;
+
     Trip trip;
     Date dateAndTime;
     int year,month,day,hour,min;
@@ -113,7 +116,6 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
             @Override
             public void onClick(View view) {
                 updateTrip();
-                goToDetailedActivity();
             }
         });
 
@@ -147,7 +149,7 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
             }
         });
 
-        final PlaceAutocompleteFragment autocompleteFragmentStart = (PlaceAutocompleteFragment)
+        autocompleteFragmentStart = (PlaceAutocompleteFragment)
                 getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_start);
 
         autocompleteFragmentStart.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -185,7 +187,7 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
                 });
 
 
-        final PlaceAutocompleteFragment autocompleteFragmentEnd = (PlaceAutocompleteFragment)
+        autocompleteFragmentEnd = (PlaceAutocompleteFragment)
                 getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_end);
 
         autocompleteFragmentEnd.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -256,6 +258,8 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
             Adapter myAdapter = new Adapter(getActivity());
             long rows_affected = myAdapter.updateTrip(trip);
             Log.i(TAG, "Updated " + rows_affected + " trip");
+
+            goToDetailedActivity();
         }
     }
 
@@ -306,15 +310,15 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
         }
         if(!directions_start_validation)
         {
-            //startPointField.setHint("please enter start point");
-            //startPointField.setError("please enter start point");//it gives user to info message //use any one //
+            ((EditText) autocompleteFragmentStart.getView().findViewById(R.id.place_autocomplete_search_input)).setHint("please enter start point");
+            ((EditText) autocompleteFragmentStart.getView().findViewById(R.id.place_autocomplete_search_input)).setError("please enter start point");
         }else{
             counter ++;
         }
         if(!directions_end_validation)
         {
-            //endPointField.setHint("please enter end point");
-            //endPointField.setError("please enter end point");//it gives user to info message //use any one //
+            ((EditText) autocompleteFragmentEnd.getView().findViewById(R.id.place_autocomplete_search_input)).setHint("please enter end point");
+            ((EditText) autocompleteFragmentEnd.getView().findViewById(R.id.place_autocomplete_search_input)).setError("please enter end point");
         }else{
             counter ++;
         }
