@@ -41,7 +41,12 @@ public class Adapter {
         contentValues.put(TripTable.TRIP_COLUMN_END_POINT_LONG,trip.getEnd_long()+"");
         contentValues.put(TripTable.TRIP_COLUMN_END_POINT_NAME,trip.getEnd_name());
         contentValues.put(TripTable.TRIP_COLUMN_DATE_TIME, fromDateToString (trip.getDate_time())); // may cause problem
-        contentValues.put(TripTable.TRIP_COLUMN_STARTED,0);
+        //contentValues.put(TripTable.TRIP_COLUMN_STARTED,0);
+
+        if(trip.isStarted())
+            contentValues.put(TripTable.TRIP_COLUMN_STARTED,1);
+        else
+            contentValues.put(TripTable.TRIP_COLUMN_STARTED,0);
 
         if(trip.isRepeated())
             contentValues.put(TripTable.TRIP_COLUMN_REPEATED,1);
