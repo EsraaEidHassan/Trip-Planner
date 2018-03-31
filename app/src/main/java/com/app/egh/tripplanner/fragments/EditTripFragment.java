@@ -182,7 +182,7 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
                         autocompleteFragmentStart.setText("");
                         view.setVisibility(View.GONE);
                         directions_start_validation = false;
-                        Toast.makeText(getContext(),"cancel start",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(),"cancel start",Toast.LENGTH_LONG).show();
                     }
                 });
 

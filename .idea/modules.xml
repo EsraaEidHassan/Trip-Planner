@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Trip-Planner.iml" filepath="$PROJECT_DIR$/Trip-Planner.iml" />
       <module fileurl="file://C:\Users\Hasnaa\AndroidStudioProjects\Trip-Planner\Trip-Planner.iml" filepath="C:\Users\Hasnaa\AndroidStudioProjects\Trip-Planner\Trip-Planner.iml" />
       <module fileurl="file://D:\ITI\Android\AndroidProject\Project\TripPlanner\.idea\Trip-Planner.iml" filepath="D:\ITI\Android\AndroidProject\Project\TripPlanner\.idea\Trip-Planner.iml" />
       <module fileurl="file://D:\ITI\Android\AndroidProject\Project\TripPlanner\Trip-Planner.iml" filepath="D:\ITI\Android\AndroidProject\Project\TripPlanner\Trip-Planner.iml" />

@@ -81,7 +81,11 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
     boolean repeat;
     boolean roundTrip;
     List<String> tripNotes;
+    boolean directions_start_validation;
+    boolean directions_end_validation;
 
+    PlaceAutocompleteFragment autocompleteFragmentStart;
+    PlaceAutocompleteFragment autocompleteFragmentEnd;
 
     FloatingActionButton fab;
     RecyclerView notesRecyclerView;
@@ -119,6 +123,9 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         tripNotes.add("first Note");
         tripNotes.add("second Note");
         tripNotes.add("third Note");
+
+        directions_start_validation = false;
+        directions_end_validation = false;
 
         final NoteAdapter adapter = new NoteAdapter(getContext(),tripNotes,notesRecyclerView);
 
@@ -238,7 +245,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         });
 
 
-        PlaceAutocompleteFragment autocompleteFragmentStart = (PlaceAutocompleteFragment)
+        autocompleteFragmentStart = (PlaceAutocompleteFragment)
                 getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_start);
 
         autocompleteFragmentStart.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -251,6 +258,9 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                 startLatit =  place.getLatLng().latitude;
                 startLongit = place.getLatLng().longitude;
                 startName = place.getName().toString();
+
+                directions_start_validation = true;
+
                 Log.i("test22", "Start Place: " + startName);
                 Log.i("test22", "Start Place: " + startLongit);
                 Log.i("test22", "Start Place: " + startLatit);
@@ -263,7 +273,21 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
             }
         });
 
-        PlaceAutocompleteFragment autocompleteFragmentEnd = (PlaceAutocompleteFragment)
+        autocompleteFragmentStart.getView().findViewById(R.id.place_autocomplete_clear_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // example : way to access view from PlaceAutoCompleteFragment
+                        ((EditText) autocompleteFragmentStart.getView()
+                                .findViewById(R.id.place_autocomplete_search_input)).setText("");
+                        autocompleteFragmentStart.setText("");
+                        view.setVisibility(View.GONE);
+                        directions_start_validation = false;
+                        //Toast.makeText(getContext(),"cancel start",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        autocompleteFragmentEnd = (PlaceAutocompleteFragment)
                 getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_end);
 
         autocompleteFragmentEnd.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -276,6 +300,9 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                 endLatit =  place.getLatLng().latitude;
                 endLongit = place.getLatLng().longitude;
                 endName = place.getName().toString();
+
+                directions_end_validation = true;
+
                 Log.i("test22", "Start Place: " + endName);
                 Log.i("test22", "Start Place: " + endLongit);
                 Log.i("test22", "Start Place: " + endLatit);
@@ -287,6 +314,19 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                 Log.i("test22", "An error occurred: " + status);
             }
         });
+
+        autocompleteFragmentEnd.getView().findViewById(R.id.place_autocomplete_clear_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // example : way to access view from PlaceAutoCompleteFragment
+                        ((EditText) autocompleteFragmentEnd.getView()
+                                .findViewById(R.id.place_autocomplete_search_input)).setText("");
+                        autocompleteFragmentEnd.setText("");
+                        view.setVisibility(View.GONE);
+                        directions_end_validation = false;
+                    }
+                });
 
         return view;
     }
@@ -332,20 +372,20 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         }else{
             counter ++;
         }
-      /*  if(startPointField.getText().toString().equalsIgnoreCase(""))
+        if(!directions_start_validation)
         {
-            startPointField.setHint("please enter start point");
-            startPointField.setError("please enter start point");//it gives user to info message //use any one //
+            ((EditText) autocompleteFragmentStart.getView().findViewById(R.id.place_autocomplete_search_input)).setHint("please enter start point");
+            ((EditText) autocompleteFragmentStart.getView().findViewById(R.id.place_autocomplete_search_input)).setError("please enter start point");
         }else{
             counter ++;
         }
-        if(endPointField.getText().toString().equalsIgnoreCase(""))
+        if(!directions_end_validation)
         {
-            endPointField.setHint("please enter end point");
-            endPointField.setError("please enter end point");//it gives user to info message //use any one //
+            ((EditText) autocompleteFragmentEnd.getView().findViewById(R.id.place_autocomplete_search_input)).setHint("please enter end point");
+            ((EditText) autocompleteFragmentEnd.getView().findViewById(R.id.place_autocomplete_search_input)).setError("please enter end point");
         }else{
             counter ++;
-        }*/
+        }
         if(dateField.getText().toString().equalsIgnoreCase(""))
         {
             dateField.setHint("please enter date");
@@ -361,7 +401,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
             counter ++;
         }
 
-        if(counter == 3)
+        if(counter == 5)
             return true;
         else
             return false;
