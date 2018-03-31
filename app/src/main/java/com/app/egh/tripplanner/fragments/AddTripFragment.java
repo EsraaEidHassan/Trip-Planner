@@ -199,7 +199,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                     // set Reminder
                     /////
 
-                    NotificationScheduler.setReminder(getActivity(),AlarmActivity.class, hour, min, day , month, year , newTrip);
+                    NotificationScheduler.setReminder(getActivity(),AlarmActivity.class,newTrip.getTrip_id(), hour, min, day , month, year , newTrip);
 
 
                     gotoHomeActivity((AppCompatActivity) getActivity());
