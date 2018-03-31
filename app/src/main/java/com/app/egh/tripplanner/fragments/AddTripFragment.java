@@ -157,7 +157,8 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
             @Override
             public void onRightClicked(int position) {
                 // dialog
-                  AskOption( position , adapter);
+                AlertDialog diaBox = AskOption(position,adapter);
+                diaBox.show();
 
             }
         });
@@ -194,6 +195,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                             public void onTextInputConfirmed(String text) {
                                 if(!text.isEmpty())
                                     tripNotes.add(text);
+                             ///   adapter.notifyItemInserted();
 
                             }
                         })
@@ -456,7 +458,9 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-
+                        adapter.noteDataList.remove(position);
+                        adapter.notifyItemRemoved(position);
+                        adapter.notifyItemRangeRemoved(position, adapter.getItemCount());
                        dialog.dismiss();
                     }
 
@@ -464,9 +468,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
 
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        adapter.noteDataList.remove(position);
-                        adapter.notifyItemRemoved(position);
-                        adapter.notifyItemRangeRemoved(position, adapter.getItemCount());
+
                         dialog.dismiss();
 
                     }

@@ -26,16 +26,16 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.AddTripActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".activities.DetailedActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCiN7XpknCs9s3QKl6UV5XKydLumdFL8iA" />
 
         <activity android:name=".activities.SignInActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,14 +48,14 @@
             android:value="AIzaSyADKPvGdtQWeJJ2aLccpEUcNqgrG0SySns" />-->
 
         <activity android:name=".activities.EditTripActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".activities.SignUpActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".activities.HistoryActivity" />
         <activity
             android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".activities.AlarmActivity"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.AppCompat.Dialog"
