@@ -49,12 +49,9 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
     // views
-
     FloatingActionButton fab;
     RecyclerView recyclerView;
     TextView emptyLabel;
-    //FirebaseAuth firebaseAuth;
-
     // variables
     public List<Trip> allTrips;
     Adapter dbAdapter;
@@ -62,7 +59,6 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,9 +75,6 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // define variables
-
-        //firebaseAuth = FirebaseAuth.getInstance();
-        //FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         allTrips = new ArrayList<>();
         dbAdapter = new Adapter(getContext());
         allTrips = dbAdapter.getUpcomingTrips();
