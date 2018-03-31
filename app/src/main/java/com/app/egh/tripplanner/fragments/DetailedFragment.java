@@ -22,6 +22,7 @@ import com.app.egh.tripplanner.activities.EditTripActivity;
 import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -107,6 +108,28 @@ public class DetailedFragment extends Fragment {
                 //Trip tripData = tripDataList.get(itemPosition);
                 // Trip tripData = tripDataList.get(0);
                 trip.setStarted(true);
+                if(trip.isRoundtrip()){
+                    trip.setStarted(false);
+                    trip.setRoundtrip(false);
+                    // add 2 hours
+                    final long millisToAdd = 7_200_000; //two hours
+                    Date d = trip.getDate_time();
+                    d.setTime(d.getTime() + millisToAdd);
+                    trip.setDate_time(d);
+                    // swip lat long
+                    double temp_lat = trip.getStart_lat();
+                    double temp_long = trip.getStart_long();
+                    String temp_name = trip.getStart_name();
+
+                    trip.setStart_name(trip.getEnd_name());
+                    trip.setStart_lat(trip.getEnd_lat());
+                    trip.setStart_long(trip.getEnd_long());
+
+                    trip.setEnd_name(temp_name);
+                    trip.setEnd_lat(temp_lat);
+                    trip.setEnd_long(temp_long);
+
+                }
                 Adapter dbAdapter = new Adapter(getContext());
 
                 dbAdapter.updateTrip(trip);

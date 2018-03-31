@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
@@ -19,9 +20,13 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.app.egh.tripplanner.R;
+import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
+
+import java.util.Date;
+import java.util.Locale;
 
 public class AlarmActivity extends AppCompatActivity {
     final static String TAG = "powerLock";
@@ -52,6 +57,43 @@ public class AlarmActivity extends AppCompatActivity {
                         Log.i("MaterialStyledDialogs", "Do something!");
                         Toast.makeText(getApplicationContext(),"start trip" + currentTrip.getTrip_id(),Toast.LENGTH_SHORT).show();
 
+                        Trip tripData = currentTrip;
+                        //int itemPosition = recyclerView.getChildLayoutPosition(v);
+                        //Trip tripData = tripDataList.get(itemPosition);
+                        // Trip tripData = tripDataList.get(0);
+                        tripData.setStarted(true);
+                        if(tripData.isRoundtrip()){
+                            tripData.setStarted(false);
+                            tripData.setRoundtrip(false);
+                            // add 2 hours
+                            final long millisToAdd = 7_200_000; //two hours
+                            Date d = tripData.getDate_time();
+                            d.setTime(d.getTime() + millisToAdd);
+                            tripData.setDate_time(d);
+                            // swip lat long
+                            double temp_lat = tripData.getStart_lat();
+                            double temp_long = tripData.getStart_long();
+                            String temp_name = tripData.getStart_name();
+
+                            tripData.setStart_name(tripData.getEnd_name());
+                            tripData.setStart_lat(tripData.getEnd_lat());
+                            tripData.setStart_long(tripData.getEnd_long());
+
+                            tripData.setEnd_name(temp_name);
+                            tripData.setEnd_lat(temp_lat);
+                            tripData.setEnd_long(temp_long);
+
+                        }
+                        Adapter dbAdapter = new Adapter(AlarmActivity.this);
+
+                        dbAdapter.updateTrip(tripData);
+
+                        //Toast.makeText( context, "Start trip activity", Toast.LENGTH_LONG).show();
+
+                        String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", tripData.getStart_lat(), tripData.getStart_long(), tripData.getStart_name(),  tripData.getEnd_lat() , tripData.getEnd_long(), tripData.getEnd_name());
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                        intent.setPackage("com.google.android.apps.maps");
+                        startActivity(intent);
                     }})
                 .setStyle(Style.HEADER_WITH_TITLE)
                 .setHeaderColor(R.color.colorAccent)
