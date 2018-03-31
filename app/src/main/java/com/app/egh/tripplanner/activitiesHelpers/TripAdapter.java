@@ -82,8 +82,8 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
         public ViewHolder(final View itemView) {
             super(itemView);
             tripNameTextView = itemView.findViewById(R.id.title);
-            startLocationTextView = itemView.findViewById(R.id.end);
-            destinationTextView = itemView.findViewById(R.id.end2);
+            startLocationTextView = itemView.findViewById(R.id.end2);
+            destinationTextView = itemView.findViewById(R.id.end);
             imageView = itemView.findViewById(R.id.imageView);
             startTrip = itemView.findViewById(R.id.startTrip);
             startTrip.setOnClickListener(new View.OnClickListener() {
