@@ -2,6 +2,7 @@ package com.app.egh.tripplanner.fragments;
 
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,6 +46,7 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
 
 
 import java.util.ArrayList;
@@ -69,7 +72,6 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
     RadioButton oneWayRadioBtn;
     CheckBox repeatCheckbox;
 
-    String tripName;
     double startLatit;
     double startLongit;
     String startName;
@@ -83,7 +85,6 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
     List<String> tripNotes;
 
 
-    FloatingActionButton fab;
     RecyclerView notesRecyclerView;
     public  static List<String> allNotes;
 
@@ -109,37 +110,48 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         oneWayRadioBtn = view.findViewById(R.id.oneDirectionRadioButton);
         repeatCheckbox = view.findViewById(R.id.repeatCheckbox);
 
-        fab = view.findViewById(R.id.addNotesBtn);
         notesRecyclerView = view.findViewById(R.id.notesRecyclerView);
 
         notesRecyclerView.setHasFixedSize(true);
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         tripNotes = new ArrayList<>();
-        tripNotes.add("first Note");
-        tripNotes.add("second Note");
-        tripNotes.add("third Note");
+       // tripNotes.add("first Note");
+        //tripNotes.add("second Note");
+        //tripNotes.add("third Note");
 
         final NoteAdapter adapter = new NoteAdapter(getContext(),tripNotes,notesRecyclerView);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        final SwipeController swipeController = new SwipeController(200,30,15, 107, new SwipeControllerAction() {
             @Override
-            public void onClick(View view) {
-               // gotoAddTripActivity((AppCompatActivity) getActivity());
-                Log.i(TAG,"add new note");
-            }
-        });
-        final SwipeController swipeController = new SwipeController(200,30,15, 75, new SwipeControllerAction() {
-            @Override
-            public void onLeftClicked(int position) {
-                Toast.makeText(getContext(), "Go to edit activity", Toast.LENGTH_LONG).show();
+            public void onLeftClicked(final int position) {
+
+                new LovelyTextInputDialog(getContext())
+                        .setTopColorRes(R.color.colorPrimary)
+                        .setMessage(R.string.updateNote)
+                        .setIcon(R.drawable.ic_note_add_black_24dp)
+                        .setInputFilter(R.string.tripError, new LovelyTextInputDialog.TextFilter() {
+                            @Override
+                            public boolean check(String text) {
+                                return text.matches("\\w+");
+                            }
+                        })
+                        .setConfirmButton(R.string.update, new LovelyTextInputDialog.OnTextInputConfirmListener() {
+                            @Override
+                            public void onTextInputConfirmed(String text) {
+                                   tripNotes.set(position,text);
+                                   adapter.notifyItemChanged(position);
+                            }
+                        })
+                        .setCancelable(true)
+                        .show();
             }
 
             @Override
             public void onRightClicked(int position) {
-                adapter.noteDataList.remove(position);
-                adapter.notifyItemRemoved(position);
-                adapter.notifyItemRangeRemoved(position, adapter.getItemCount());
+                // dialog
+                  AskOption( position , adapter);
+
             }
         });
 
@@ -160,7 +172,26 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         addNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("addTrip","add Note");
+                new LovelyTextInputDialog(getContext())
+                        .setTopColorRes(R.color.colorPrimary)
+                        .setMessage(R.string.noteTitle)
+                        .setIcon(R.drawable.ic_note_add_black_24dp)
+                        .setInputFilter(R.string.tripError, new LovelyTextInputDialog.TextFilter() {
+                            @Override
+                            public boolean check(String text) {
+                                return text.matches("\\w+");
+                            }
+                        })
+                        .setConfirmButton(R.string.addNote, new LovelyTextInputDialog.OnTextInputConfirmListener() {
+                            @Override
+                            public void onTextInputConfirmed(String text) {
+                                if(!text.isEmpty())
+                                    tripNotes.add(text);
+
+                            }
+                        })
+                        .setCancelable(true)
+                        .show();
             }
         });
         addTripBtn.setOnClickListener(new View.OnClickListener() {
@@ -322,6 +353,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
 
     }
 
+
     private boolean validate(){
 
         int counter = 0;
@@ -366,4 +398,36 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
         else
             return false;
     }
+
+    private AlertDialog AskOption(final int position , final NoteAdapter adapter)
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getContext())
+                //set message, title, and icon
+                .setTitle("Delete trip")
+                .setMessage("Are you sure? ")
+                .setIcon(R.drawable.ic_delete_forever_black_24dp)
+
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                       dialog.dismiss();
+                    }
+
+                })
+
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        adapter.noteDataList.remove(position);
+                        adapter.notifyItemRemoved(position);
+                        adapter.notifyItemRangeRemoved(position, adapter.getItemCount());
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+
+    }
+
 }
