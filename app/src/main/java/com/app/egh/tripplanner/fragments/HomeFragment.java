@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment {
 
     private void gotoAddTripActivity(AppCompatActivity activity){
 
-        getActivity().finish();
+        //getActivity().finish();
         Intent intent = new Intent(activity, AddTripActivity.class);
         startActivity(intent);
 

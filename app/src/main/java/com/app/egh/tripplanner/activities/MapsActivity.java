@@ -33,6 +33,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -244,7 +245,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // Adding all the points in the route to LineOptions
                 lineOptions.addAll(points);
                 lineOptions.width(10);
-                lineOptions.color(Color.RED);
+                Random rnd = new Random();
+                //List<Integer> colors = new ArrayList<>();
+                //colors.add(Color.RED);
+                //colors.add(Color.BLACK);
+                //colors.add(Color.CYAN);
+                lineOptions.color( Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
 
                 Log.d("onPostExecute","onPostExecute lineoptions decoded");
 
