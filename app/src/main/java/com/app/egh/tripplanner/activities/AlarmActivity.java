@@ -1,5 +1,6 @@
 package com.app.egh.tripplanner.activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.app.egh.tripplanner.R;
+import com.app.egh.tripplanner.data.model.Trip;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
 
@@ -28,15 +30,18 @@ public class AlarmActivity extends AppCompatActivity {
 
        setContentView(R.layout.activity_alarm);
 
+       Intent intent = getIntent();
+       Trip currentTrip = (Trip) intent.getSerializableExtra("tripReminder");
+
         new MaterialStyledDialog.Builder(this)
-                .setTitle("Trip")
+                .setTitle(currentTrip.getTrip_name())
                 .setDescription("Do you want to start your trip now?")
                 .setPositiveText("Start")
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         finish();
-                        Log.d("MaterialStyledDialogs", "Do something!");
+                        Log.i("MaterialStyledDialogs", "Do something!");
                         Toast.makeText(getApplicationContext(),"start trip",Toast.LENGTH_SHORT).show();
 
                     }})
@@ -47,7 +52,7 @@ public class AlarmActivity extends AppCompatActivity {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         finish();
-                        Log.d("MaterialStyledDialogs", "Do something!");
+                        Log.i("MaterialStyledDialogs", "Do something!");
                         Toast.makeText(getApplicationContext(),"cancel",Toast.LENGTH_SHORT).show();
 
                     }})
@@ -56,7 +61,7 @@ public class AlarmActivity extends AppCompatActivity {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         finish();
-                        Log.d("MaterialStyledDialogs", "Do something!");
+                        Log.i("MaterialStyledDialogs", "Do something!");
                         Toast.makeText(getApplicationContext(),"postpone trip",Toast.LENGTH_SHORT).show();
 
                     }})
