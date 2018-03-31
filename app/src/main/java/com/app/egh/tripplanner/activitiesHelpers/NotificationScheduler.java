@@ -43,7 +43,7 @@ public class NotificationScheduler
 
 
         // cancel already scheduled reminders
-        //cancelReminder(context,cls);
+        cancelReminder(context,cls,id);
 
         if(setcalendar.before(calendar))
             setcalendar.add(Calendar.DATE,1);

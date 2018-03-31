@@ -37,7 +37,6 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
         public void onClick(View v) {
             int itemPosition = recyclerView.getChildLayoutPosition(v);
             Trip tripData = tripDataList.get(itemPosition);
-            Toast.makeText(context, tripData.getTrip_name(), Toast.LENGTH_LONG).show();
             Log.i(TAG , String.valueOf(tripData.getDate_time()));
             Intent intent = new Intent(context, DetailedActivity.class);
             //Bundle bundle = new Bundle();
@@ -92,7 +91,6 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
                 public void onClick(View v) {
                     int x = getLayoutPosition();
                     Trip tripData = tripDataList.get(x);
-                    Toast.makeText( context, tripData.getTrip_name(), Toast.LENGTH_LONG).show();
                     //int itemPosition = recyclerView.getChildLayoutPosition(v);
                     //Trip tripData = tripDataList.get(itemPosition);
                    // Trip tripData = tripDataList.get(0);

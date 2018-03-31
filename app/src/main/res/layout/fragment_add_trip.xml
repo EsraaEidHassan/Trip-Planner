@@ -109,7 +109,7 @@
         <RadioGroup
             android:id="@+id/notesRadioGroup"
             android:layout_width="match_parent"
-            android:layout_height="83dp"
+            android:layout_height="47dp"
             android:orientation="horizontal">
 
             <RadioButton
@@ -117,8 +117,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="One Direction"
-                android:checked="true"/>
+                android:checked="true"
+                android:text="One Direction" />
 
             <RadioButton
                 android:id="@+id/roundTripRadioButton"
@@ -129,42 +129,31 @@
         </RadioGroup>
 
 
-
-
-
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/notesTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Notes" />
-           <android.support.v7.widget.RecyclerView
+
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/notesRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="80dp" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/addNotesBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_margin="@dimen/fab_margin"
-                app:srcCompat="@android:drawable/ic_input_add"
-                android:tint="@android:color/white"/>
+                android:layout_height="50dp" />
 
         </android.support.v7.widget.LinearLayoutCompat>
 
         <Button
             android:id="@+id/addNoteBtn"
 
-            android:layout_width="63dp"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="36dp"
+            android:background="@drawable/ic_add_circle_black_24dp"
             android:text="+" />
-
 
 
         <Button
@@ -174,7 +163,6 @@
             android:layout_gravity="center_horizontal"
             android:paddingLeft="70dp"
             android:paddingRight="70dp"
-            android:text="Add Trip"
-            />
+            android:text="Add Trip" />
     </LinearLayout>
 </ScrollView>

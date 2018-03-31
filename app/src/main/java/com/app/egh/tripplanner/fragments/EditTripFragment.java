@@ -260,7 +260,7 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
 
             Adapter myAdapter = new Adapter(getActivity());
             long rows_affected = myAdapter.updateTrip(trip);
-            NotificationScheduler.cancelReminder(getActivity(), AlarmActivity.class, trip.getTrip_id());
+            //NotificationScheduler.cancelReminder(getActivity(), AlarmActivity.class, trip.getTrip_id());
             NotificationScheduler.setReminder(getActivity(), AlarmActivity.class, trip.getTrip_id(), hour,  min, day ,  month,  year, trip );
             Log.i(TAG, "Updated " + rows_affected + " trip");
 
