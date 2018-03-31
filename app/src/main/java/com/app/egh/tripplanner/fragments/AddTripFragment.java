@@ -41,6 +41,7 @@ import com.app.egh.tripplanner.activitiesHelpers.TripAdapter;
 import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -288,10 +289,12 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
             }
         });
 
+        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().
+                setTypeFilter(Place.TYPE_COUNTRY).setCountry("EG").build();
 
         autocompleteFragmentStart = (PlaceAutocompleteFragment)
                 getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_start);
-
+        autocompleteFragmentStart.setFilter(typeFilter);
         autocompleteFragmentStart.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -333,7 +336,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
 
         autocompleteFragmentEnd = (PlaceAutocompleteFragment)
                 getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_end);
-
+        autocompleteFragmentEnd.setFilter(typeFilter);
         autocompleteFragmentEnd.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
