@@ -102,5 +102,35 @@ public class DataParser {
 
         return poly;
     }
+
+    public long getEstimatedTime(JSONObject jObject){
+
+        List<List<HashMap<String, String>>> routes = new ArrayList<>() ;
+        JSONArray jRoutes;
+        JSONArray jLegs;
+        JSONObject jDuration;
+
+        try {
+
+            jRoutes = jObject.getJSONArray("routes");
+
+            /** Traversing all routes */
+            for (int i = 0; i < jRoutes.length(); i++) {
+                jLegs = ((JSONObject) jRoutes.get(i)).getJSONArray("legs");
+                List path = new ArrayList<>();
+
+                /** Traversing all legs */
+                for (int j = 0; j < jLegs.length(); j++) {
+                    jDuration = ((JSONObject) jLegs.get(j)).getJSONObject("duration");
+                    long duartion = jDuration.getLong("value");
+                    return duartion;
+                }
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+        }
+        return 0;
+    }
 }
 

@@ -12,4 +12,10 @@ public class EditTripActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_trip);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
 }
