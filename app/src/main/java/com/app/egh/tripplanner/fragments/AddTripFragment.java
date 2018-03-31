@@ -258,6 +258,10 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)
                 );
+                Date date = new Date();
+                Calendar cc = Calendar.getInstance();
+                cc.setTime(date);
+                dpd.setMinDate(cc);
                 dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
             }
         });
@@ -273,6 +277,13 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                        now.get(Calendar.MINUTE),
                        false
                );
+                Date date = new Date();
+               Calendar cc = Calendar.getInstance();
+               cc.setTime(date);
+               // cc.get(Calendar.HOUR_OF_DAY); // gets hour in 24h format
+               // cc.get(Calendar.HOUR);        // gets hour in 12h format
+               // cc.get(Calendar.MONTH);
+                tpd.setMinTime(cc.get(Calendar.HOUR_OF_DAY),cc.get(Calendar.MINUTE),cc.get(Calendar.SECOND));
                 tpd.show(getActivity().getFragmentManager(), "Timepickerdialog");
             }
         });
