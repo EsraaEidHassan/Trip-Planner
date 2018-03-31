@@ -18,6 +18,7 @@ import com.app.egh.tripplanner.activities.DetailedActivity;
 import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -96,6 +97,28 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
                     //Trip tripData = tripDataList.get(itemPosition);
                    // Trip tripData = tripDataList.get(0);
                     tripData.setStarted(true);
+                    if(tripData.isRoundtrip()){
+                        tripData.setStarted(false);
+                        tripData.setRoundtrip(false);
+                        // add 2 hours
+                        final long millisToAdd = 7_200_000; //two hours
+                        Date d = tripData.getDate_time();
+                        d.setTime(d.getTime() + millisToAdd);
+                        tripData.setDate_time(d);
+                        // swip lat long
+                        double temp_lat = tripData.getStart_lat();
+                        double temp_long = tripData.getStart_long();
+                        String temp_name = tripData.getStart_name();
+
+                        tripData.setStart_name(tripData.getEnd_name());
+                        tripData.setStart_lat(tripData.getEnd_lat());
+                        tripData.setStart_long(tripData.getEnd_long());
+
+                        tripData.setEnd_name(temp_name);
+                        tripData.setEnd_lat(temp_lat);
+                        tripData.setEnd_long(temp_long);
+
+                    }
                     Adapter dbAdapter = new Adapter(getContext());
 
                     dbAdapter.updateTrip(tripData);
