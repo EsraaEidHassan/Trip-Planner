@@ -50,6 +50,10 @@
         <activity
             android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
+        <activity android:name=".activities.AlarmActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            ></activity>
     </application>
 
 </manifest>

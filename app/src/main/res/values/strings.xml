@@ -6,7 +6,7 @@
     <string name="addTrip">Add Trip</string>
     <string name="EmailAddress">Email Address</string>
     <string name="Password">Password</string>
-    <string name="orLogin">Or login with</string>
+    <string name="orLogin">Or sign in with</string>
     <string name="signIn">Sign in</string>
     <string name="notUser">Don\'t Have account? sign up here</string>
     <string name="createAnAccount">Create an Account</string>

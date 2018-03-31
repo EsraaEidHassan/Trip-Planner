@@ -25,7 +25,7 @@ public class Trip implements Serializable {
     private List<String> notes;
 
 
-    public Trip(String trip_name, long start_lat, long start_long, String start_name, long end_lat, long end_long, String end_name, Date date_time, boolean repeated, boolean roundtrip, List<String> notes) {
+    public Trip(String trip_name, double start_lat, double start_long, String start_name, double end_lat, double end_long, String end_name, Date date_time, boolean repeated, boolean roundtrip, List<String> notes) {
         this.trip_name = trip_name;
         this.start_lat = start_lat;
         this.start_long = start_long;
@@ -39,7 +39,7 @@ public class Trip implements Serializable {
         this.notes = notes;
     }
 
-    public Trip(String trip_name, long start_lat, long start_long, String start_name, long end_lat, long end_long, String end_name, Date date_time, boolean repeated, boolean roundtrip) {
+    public Trip(String trip_name, double start_lat, double start_long, String start_name, double end_lat, double end_long, String end_name, Date date_time, boolean repeated, boolean roundtrip) {
         this.trip_name = trip_name;
         this.start_lat = start_lat;
         this.start_long = start_long;

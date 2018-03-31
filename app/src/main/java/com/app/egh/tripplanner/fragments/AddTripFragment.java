@@ -27,9 +27,12 @@ import android.widget.Toast;
 
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.AddTripActivity;
+
+import com.app.egh.tripplanner.activities.AlarmActivity;
 import com.app.egh.tripplanner.activities.HomeActivity;
 import com.app.egh.tripplanner.activitiesHelpers.MyDividerItemDecoration;
 import com.app.egh.tripplanner.activitiesHelpers.NoteAdapter;
+import com.app.egh.tripplanner.activitiesHelpers.NotificationScheduler;
 import com.app.egh.tripplanner.activitiesHelpers.SwipeController;
 import com.app.egh.tripplanner.activitiesHelpers.SwipeControllerAction;
 import com.app.egh.tripplanner.activitiesHelpers.TripAdapter;
@@ -185,12 +188,19 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                 Log.i("time"  ,""+dateAndTime);
 
                 if(validate()) {
-                    Trip newTrip = new Trip(tripNameField.getText().toString(), (long) startLatit, (long) startLongit, startName, (long) endLatit, (long) endLongit, endName, dateAndTime, repeat, roundTrip, tripNotes);
+                    Trip newTrip = new Trip(tripNameField.getText().toString(),  startLatit,  startLongit, startName,  endLatit,  endLongit, endName, dateAndTime, repeat, roundTrip, tripNotes);
                     Adapter myAdapter = new Adapter(getActivity());
                     long trip_id = myAdapter.insert_trip(newTrip);
                     newTrip.setTrip_id((int) trip_id);
                     Log.i(TAG, "trip id : " + trip_id);
                     myAdapter.insert_Notes(newTrip);
+
+                    /////
+                    // set Reminder
+                    /////
+
+                    NotificationScheduler.setReminder(getActivity(),AlarmActivity.class, hour, min, day , month, year , newTrip);
+
 
                     gotoHomeActivity((AppCompatActivity) getActivity());
                 }

@@ -35,6 +35,8 @@ public class SwipeController extends Callback {
     private int tempX;
     private int tempY;
     private float textSize;
+    RectF buttonInstance;
+
     public SwipeController(int buttonWidth, float textSize, int tempX , int tempY, SwipeControllerAction buttonsActions) {
         this.tempX = tempX;
         this.tempY = tempY;
@@ -52,7 +54,6 @@ public class SwipeController extends Callback {
         this.historyController = historyController;
     }
 
-    RectF buttonInstance;
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         return makeMovementFlags(0, LEFT | RIGHT);
@@ -207,7 +208,6 @@ public class SwipeController extends Callback {
             p.setColor(Color.parseColor("#ff4081"));
             c.drawRoundRect(rightButton, corners, corners, p);
             drawText("DELETE", c, rightButton, p);
-
             buttonInstance = rightButton;
         }
 

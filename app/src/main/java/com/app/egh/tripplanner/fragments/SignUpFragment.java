@@ -33,7 +33,6 @@ public class SignUpFragment extends Fragment {
     TextView email;
     Button signUp;
     TextView signIn;
-    Button fbSignup;
 
     ProgressDialog progressDialog;
 
@@ -54,7 +53,6 @@ public class SignUpFragment extends Fragment {
         signUp = view.findViewById(R.id.signupBtn);
         signIn = view.findViewById(R.id.goto_signIn);
         signIn.setPaintFlags(signIn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        fbSignup = view.findViewById(R.id.fbSignup);
 
         progressDialog = new ProgressDialog(getContext());
 
@@ -85,12 +83,6 @@ public class SignUpFragment extends Fragment {
             }
         });
 
-        fbSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Sign up with facebook", Toast.LENGTH_LONG).show();
-            }
-        });
         return view;
     }
 

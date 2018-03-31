@@ -1,6 +1,7 @@
 package com.app.egh.tripplanner.fragments;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -108,19 +110,9 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onRightClicked(int position) {
-                Boolean isDeleted = dbAdapter.deleteTrip(allTrips.get(position).getTrip_id());
-                Log.i(TAG,"trip id: "+allTrips.get(position).getTrip_id());
-                if(isDeleted)
-                    Toast.makeText(getContext(),"Trip Delete Successfuly !",Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(getContext(),"Cann't delete this Trip !",Toast.LENGTH_LONG).show();
-                adapter.tripDataList.remove(position);
-                adapter.notifyItemRemoved(position);
-                adapter.notifyItemRangeRemoved(position, adapter.getItemCount());
-                if (allTrips.size() > 0)
-                    emptyLabel.setVisibility(View.INVISIBLE);
-                else
-                    emptyLabel.setVisibility(View.VISIBLE);
+                AlertDialog diaBox = AskOption(position,adapter);
+                diaBox.show();
+
             }
         });
 
@@ -151,6 +143,47 @@ public class HomeFragment extends Fragment {
         Intent intent = new Intent(getActivity(), EditTripActivity.class);
         intent.putExtra("trip",trip);
         startActivity(intent);
+    }
+
+    private AlertDialog AskOption(final int position , final TripAdapter adapter)
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getContext())
+                //set message, title, and icon
+                .setTitle("Delete trip")
+                .setMessage("Are you sure? ")
+                .setIcon(R.drawable.ic_delete_forever_black_24dp)
+
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        Boolean isDeleted = dbAdapter.deleteTrip(allTrips.get(position).getTrip_id());
+                        Log.i(TAG,"trip id: "+allTrips.get(position).getTrip_id());
+                        if(isDeleted)
+                            Toast.makeText(getContext(),"Trip Delete Successfuly !",Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(getContext(),"Cann't delete this Trip !",Toast.LENGTH_LONG).show();
+                        adapter.tripDataList.remove(position);
+                        adapter.notifyItemRemoved(position);
+                        adapter.notifyItemRangeRemoved(position, adapter.getItemCount());
+                        if (allTrips.size() > 0)
+                            emptyLabel.setVisibility(View.INVISIBLE);
+                        else
+                            emptyLabel.setVisibility(View.VISIBLE);                        dialog.dismiss();
+                    }
+
+                })
+
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+
     }
 
 }
