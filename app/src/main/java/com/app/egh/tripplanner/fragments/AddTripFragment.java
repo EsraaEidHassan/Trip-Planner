@@ -206,7 +206,9 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
                     // set Reminder
                     /////
 
-                    NotificationScheduler.setReminder(getActivity(),AlarmActivity.class, hour, min, day , month, year , newTrip);
+                    NotificationScheduler.setReminder(getActivity(),AlarmActivity.class, newTrip.getTrip_id(), hour, min, day , month, year , newTrip);
+
+
                     gotoHomeActivity((AppCompatActivity) getActivity());
                 }
                 }
@@ -369,6 +371,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
             tripNameField.setError("please enter trip name");//it gives user to info message //use any one //
         }else{
             counter ++;
+            tripNameField.setError(null);
         }
         if(!directions_start_validation)
         {
@@ -376,6 +379,8 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
             ((EditText) autocompleteFragmentStart.getView().findViewById(R.id.place_autocomplete_search_input)).setError("please enter start point");
         }else{
             counter ++;
+            ((EditText) autocompleteFragmentStart.getView().findViewById(R.id.place_autocomplete_search_input)).setError(null);
+
         }
         if(!directions_end_validation)
         {
@@ -383,6 +388,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
             ((EditText) autocompleteFragmentEnd.getView().findViewById(R.id.place_autocomplete_search_input)).setError("please enter end point");
         }else{
             counter ++;
+            ((EditText) autocompleteFragmentEnd.getView().findViewById(R.id.place_autocomplete_search_input)).setError(null);
         }
         if(dateField.getText().toString().equalsIgnoreCase(""))
         {
@@ -390,6 +396,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
             dateField.setError("please enter date");//it gives user to info message //use any one //
         }else{
             counter ++;
+            dateField.setError(null);
         }
         if(timeField.getText().toString().equalsIgnoreCase(""))
         {
@@ -397,6 +404,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
             timeField.setError("please enter time");//it gives user to info message //use any one //
         }else{
             counter ++;
+            timeField.setError(null);
         }
 
         if(counter == 5)

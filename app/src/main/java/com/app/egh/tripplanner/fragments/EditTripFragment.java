@@ -1,6 +1,7 @@
 package com.app.egh.tripplanner.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,8 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.egh.tripplanner.R;
+import com.app.egh.tripplanner.activities.AlarmActivity;
 import com.app.egh.tripplanner.activities.DetailedActivity;
 import com.app.egh.tripplanner.activities.EditTripActivity;
+import com.app.egh.tripplanner.activitiesHelpers.NotificationScheduler;
 import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
 import com.google.android.gms.common.api.Status;
@@ -257,6 +260,8 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
 
             Adapter myAdapter = new Adapter(getActivity());
             long rows_affected = myAdapter.updateTrip(trip);
+            NotificationScheduler.cancelReminder(getActivity(), AlarmActivity.class, trip.getTrip_id());
+            NotificationScheduler.setReminder(getActivity(), AlarmActivity.class, trip.getTrip_id(), hour,  min, day ,  month,  year, trip );
             Log.i(TAG, "Updated " + rows_affected + " trip");
 
             goToDetailedActivity();

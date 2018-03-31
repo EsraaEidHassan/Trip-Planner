@@ -25,10 +25,10 @@ import static android.content.Context.ALARM_SERVICE;
 
 public class NotificationScheduler
 {
-    public static final int DAILY_REMINDER_REQUEST_CODE=100;
+   // public static final int DAILY_REMINDER_REQUEST_CODE=100;
     public static final String TAG="NotificationScheduler";
 
-    public static void setReminder(Context context, Class<?> cls, int hour, int min, int day , int month, int year, Trip trip )
+    public static void setReminder(Context context, Class<?> cls, int id, int hour, int min, int day , int month, int year, Trip trip )
    //public static void setReminder(Context context, Class<?> cls, int hour, int min )
     {
         Calendar calendar = Calendar.getInstance();
@@ -60,12 +60,29 @@ public class NotificationScheduler
 
         Intent intent1 = new Intent(context, cls);
         intent1.putExtra("tripReminder",trip);
-       PendingIntent pendingIntent = PendingIntent.getActivity(context, DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+       PendingIntent pendingIntent = PendingIntent.getActivity(context, id, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, setcalendar.getTimeInMillis(), pendingIntent);
 
     }
 
+    public static void cancelReminder(Context context, Class<?> cls, int id)
+    {
+        // Disable a receiver
+
+        ComponentName receiver = new ComponentName(context, cls);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+
+        Intent intent1 = new Intent(context, cls);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        am.cancel(pendingIntent);
+        pendingIntent.cancel();
+    }
 
 
 
