@@ -139,6 +139,10 @@ public class HomeActivity extends AppCompatActivity {
             // do action
             syncTrips();
             return true;
+        }else if (id == R.id.action_map) {
+            // do action
+            startActivity(new Intent(this,MapsActivity.class));
+            return true;
         }
         else if (id == R.id.action_logout) {
             // do action
