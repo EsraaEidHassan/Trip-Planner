@@ -36,8 +36,12 @@
             android:value="AIzaSyADKPvGdtQWeJJ2aLccpEUcNqgrG0SySns" />
 
         <activity android:name=".activities.EditTripActivity" />
-        <activity android:name=".activities.SignUpActivity"></activity>
-        <activity android:name=".activities.HistoryActivity"></activity>
+        <activity android:name=".activities.SignUpActivity" />
+        <activity android:name=".activities.HistoryActivity" />
+        <activity android:name=".activities.AlarmActivity"
+            android:excludeFromRecents="true"
+android:theme="@style/Theme.AppCompat.Dialog"
+            ></activity>
     </application>
 
 </manifest>
