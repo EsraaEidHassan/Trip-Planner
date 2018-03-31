@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.DetailedActivity;
@@ -45,12 +46,15 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
     RadioGroup directionsRadioGroup;
     RadioButton oneWayRadioBtn;
     CheckBox repeatCheckbox;
+    CheckBox doneCheckbox;
     Button editTrip;
     //LinearLayout notes;
 
     Trip trip;
     Date dateAndTime;
     int year,month,day,hour,min;
+    boolean directions_start_validation;
+    boolean directions_end_validation;
 
     public EditTripFragment() {
         // Required empty public constructor
@@ -72,31 +76,37 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
         directionsRadioGroup = view.findViewById(R.id.directionsRadioGroup);
         oneWayRadioBtn = view.findViewById(R.id.oneDirectionRadioButton);
         repeatCheckbox = view.findViewById(R.id.repeatCheckbox);
+        doneCheckbox = view.findViewById(R.id.doneCheckbox);
         editTrip = view.findViewById(R.id.editTrip);
 
         trip_name.setText(trip.getTrip_name());
+        directions_start_validation = true;
+        directions_end_validation = true;
         try {
-            year = trip.getDate_time().getYear();
-            month = trip.getDate_time().getMonth();
-            day = trip.getDate_time().getDay();
-            hour = trip.getDate_time().getHours();
-            min = trip.getDate_time().getMinutes();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(trip.getDate_time());
+            year = calendar.get(Calendar.YEAR);
+            month = calendar.get(Calendar.MONTH);
+            day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            min = calendar.get(Calendar.MINUTE); //number of seconds
 
             dateField.setText(day + "/" + (month + 1) + "/" + year);
             timeField.setText(getTime());
         }catch (Exception e){
-            Calendar c = Calendar.getInstance();
-            Date date = c.getTime();
 
-            year = date.getYear();Log.i(TAG,year+"");
-            month = date.getMonth();
-            day = date.getDay();
-            hour = date.getHours();
-            min = date.getMinutes();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(calendar.getTime());
+            year = calendar.get(Calendar.YEAR);
+            month = calendar.get(Calendar.MONTH);
+            day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            min = calendar.get(Calendar.MINUTE); //number of seconds
 
             dateField.setText(day + "/" + (month + 1) + "/" + year);
             timeField.setText(getTime());
-
         }
 
         editTrip.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +147,7 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
             }
         });
 
-        PlaceAutocompleteFragment autocompleteFragmentStart = (PlaceAutocompleteFragment)
+        final PlaceAutocompleteFragment autocompleteFragmentStart = (PlaceAutocompleteFragment)
                 getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_start);
 
         autocompleteFragmentStart.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -147,6 +157,8 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
                 trip.setStart_lat(place.getLatLng().latitude);
                 trip.setStart_long(place.getLatLng().longitude);
                 trip.setStart_name(place.getName().toString());
+
+                directions_start_validation = true;
             }
 
             @Override
@@ -156,8 +168,24 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
             }
         });
 
+        ((EditText) autocompleteFragmentStart.getView().findViewById(R.id.place_autocomplete_search_input)).setText(trip.getStart_name());
 
-        PlaceAutocompleteFragment autocompleteFragmentEnd = (PlaceAutocompleteFragment)
+        autocompleteFragmentStart.getView().findViewById(R.id.place_autocomplete_clear_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // example : way to access view from PlaceAutoCompleteFragment
+                         ((EditText) autocompleteFragmentStart.getView()
+                        .findViewById(R.id.place_autocomplete_search_input)).setText("");
+                        autocompleteFragmentStart.setText("");
+                        view.setVisibility(View.GONE);
+                        directions_start_validation = false;
+                        Toast.makeText(getContext(),"cancel start",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+        final PlaceAutocompleteFragment autocompleteFragmentEnd = (PlaceAutocompleteFragment)
                 getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_end);
 
         autocompleteFragmentEnd.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -167,6 +195,8 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
                 trip.setEnd_lat(place.getLatLng().latitude);
                 trip.setEnd_long(place.getLatLng().longitude);
                 trip.setEnd_name(place.getName().toString());
+
+                directions_end_validation = true;
             }
 
             @Override
@@ -174,36 +204,59 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
                 // TODO: Handle the error.
                 Log.i(TAG, "An error occurred: " + status);
             }
+
         });
 
+        ((EditText) autocompleteFragmentEnd.getView().findViewById(R.id.place_autocomplete_search_input)).setText(trip.getEnd_name());
 
+        autocompleteFragmentEnd.getView().findViewById(R.id.place_autocomplete_clear_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // example : way to access view from PlaceAutoCompleteFragment
+                         ((EditText) autocompleteFragmentEnd.getView()
+                         .findViewById(R.id.place_autocomplete_search_input)).setText("");
+                        autocompleteFragmentEnd.setText("");
+                        view.setVisibility(View.GONE);
+                        directions_end_validation = false;
+                    }
+                });
         return view;
     }
 
     private void updateTrip(){
 
-        trip.setTrip_name(trip_name.getText().toString());
+        if(validate()) {
 
-        if(oneWayRadioBtn.isChecked()){
-            trip.setRoundtrip(false);
-        }else{
-            trip.setRoundtrip(true);
+            trip.setTrip_name(trip_name.getText().toString());
+
+            if (oneWayRadioBtn.isChecked()) {
+                trip.setRoundtrip(false);
+            } else {
+                trip.setRoundtrip(true);
+            }
+
+            if (repeatCheckbox.isChecked()) {
+                trip.setRepeated(true);
+            } else {
+                trip.setRepeated(false);
+            }
+
+            if (doneCheckbox.isChecked()) {
+                trip.setStarted(true);
+            } else {
+                trip.setStarted(false);
+            }
+
+            Calendar c = Calendar.getInstance();
+            c.set(year, month, day, hour, min);
+            dateAndTime = c.getTime();
+            trip.setDate_time(dateAndTime);
+
+            Adapter myAdapter = new Adapter(getActivity());
+            long rows_affected = myAdapter.updateTrip(trip);
+            Log.i(TAG, "Updated " + rows_affected + " trip");
         }
-
-        if(repeatCheckbox.isChecked()){
-            trip.setRepeated(true);
-        }else{
-            trip.setRepeated(false);
-        }
-
-        Calendar c = Calendar.getInstance();
-        c.set(year, month, day, hour, min);
-        dateAndTime = c.getTime();
-        trip.setDate_time(dateAndTime);
-
-        Adapter myAdapter = new Adapter(getActivity());
-        long rows_affected = myAdapter.updateTrip(trip);
-        Log.i(TAG,"Updated "+rows_affected+" trip");
     }
 
     @Override
@@ -251,20 +304,20 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
         }else{
             counter ++;
         }
-      /*  if(startPointField.getText().toString().equalsIgnoreCase(""))
+        if(!directions_start_validation)
         {
-            startPointField.setHint("please enter start point");
-            startPointField.setError("please enter start point");//it gives user to info message //use any one //
+            //startPointField.setHint("please enter start point");
+            //startPointField.setError("please enter start point");//it gives user to info message //use any one //
         }else{
             counter ++;
         }
-        if(endPointField.getText().toString().equalsIgnoreCase(""))
+        if(!directions_end_validation)
         {
-            endPointField.setHint("please enter end point");
-            endPointField.setError("please enter end point");//it gives user to info message //use any one //
+            //endPointField.setHint("please enter end point");
+            //endPointField.setError("please enter end point");//it gives user to info message //use any one //
         }else{
             counter ++;
-        }*/
+        }
         if(dateField.getText().toString().equalsIgnoreCase(""))
         {
             dateField.setHint("please enter date");
@@ -280,7 +333,7 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
             counter ++;
         }
 
-        if(counter == 3)
+        if(counter == 5)
             return true;
         else
             return false;

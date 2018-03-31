@@ -9,6 +9,9 @@
         android:title="History"
         android:id="@+id/action_history"/>
     <item
+        android:title="Map History"
+        android:id="@+id/action_map"/>
+    <item
         android:title="Logout"
         android:id="@+id/action_logout"/>
 </menu>
