@@ -230,6 +230,7 @@ public class AddTripFragment extends Fragment implements TimePickerDialog.OnTime
 
                 if(validate()) {
                     Trip newTrip = new Trip(tripNameField.getText().toString(),  startLatit,  startLongit, startName,  endLatit,  endLongit, endName, dateAndTime, repeat, roundTrip, tripNotes);
+                    newTrip.setStarted(false);
                     Adapter myAdapter = new Adapter(getActivity());
                     long trip_id = myAdapter.insert_trip(newTrip);
                     newTrip.setTrip_id((int) trip_id);
