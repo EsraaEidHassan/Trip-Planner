@@ -108,6 +108,7 @@ public class DetailedFragment extends Fragment {
                 //Trip tripData = tripDataList.get(itemPosition);
                 // Trip tripData = tripDataList.get(0);
                 trip.setStarted(true);
+                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", trip.getStart_lat(), trip.getStart_long(), trip.getStart_name(),  trip.getEnd_lat() , trip.getEnd_long(), trip.getEnd_name());
                 if(trip.isRoundtrip()){
                     trip.setStarted(false);
                     trip.setRoundtrip(false);
@@ -136,7 +137,6 @@ public class DetailedFragment extends Fragment {
 
                 //Toast.makeText( context, "Start trip activity", Toast.LENGTH_LONG).show();
 
-                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", trip.getStart_lat(), trip.getStart_long(), trip.getStart_name(),  trip.getEnd_lat() , trip.getEnd_long(), trip.getEnd_name());
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.setPackage("com.google.android.apps.maps");
                 getContext().startActivity(intent);

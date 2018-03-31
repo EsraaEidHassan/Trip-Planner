@@ -62,6 +62,7 @@ public class AlarmActivity extends AppCompatActivity {
                         //Trip tripData = tripDataList.get(itemPosition);
                         // Trip tripData = tripDataList.get(0);
                         tripData.setStarted(true);
+                        String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", tripData.getStart_lat(), tripData.getStart_long(), tripData.getStart_name(),  tripData.getEnd_lat() , tripData.getEnd_long(), tripData.getEnd_name());
                         if(tripData.isRoundtrip()){
                             tripData.setStarted(false);
                             tripData.setRoundtrip(false);
@@ -90,7 +91,6 @@ public class AlarmActivity extends AppCompatActivity {
 
                         //Toast.makeText( context, "Start trip activity", Toast.LENGTH_LONG).show();
 
-                        String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", tripData.getStart_lat(), tripData.getStart_long(), tripData.getStart_name(),  tripData.getEnd_lat() , tripData.getEnd_long(), tripData.getEnd_name());
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                         intent.setPackage("com.google.android.apps.maps");
                         startActivity(intent);
