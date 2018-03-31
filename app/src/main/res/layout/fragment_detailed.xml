@@ -260,13 +260,24 @@
             android:id="@+id/editTrip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/editTrip" />
+            android:text="@string/editTrip"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:layout_marginTop="@dimen/card_margin"/>
 
         <Button
             android:id="@+id/startTripFromDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/startTrip" />
+            android:text="@string/startTrip"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginBottom="@dimen/card_margin"/>
 
     </LinearLayout>
 

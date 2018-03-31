@@ -158,11 +158,12 @@
 
         <Button
             android:id="@+id/addTripBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingLeft="70dp"
-            android:paddingRight="70dp"
-            android:text="Add Trip" />
+            android:text="Add Trip"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="#ffffff"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginBottom="@dimen/card_margin"/>
     </LinearLayout>
 </ScrollView>
