@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,7 +66,7 @@ public class SignInFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
+        final View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
         emailAddress = view.findViewById(R.id.emailText);
         password = view.findViewById(R.id.passwordText);
         signIn = view.findViewById(R.id.signInBtn);
@@ -110,8 +111,19 @@ public class SignInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                // Toast.makeText(getContext(), "Sign In with facebook", Toast.LENGTH_LONG).show();
-                startGoogleConfigurations();
-                signInWithGoogle();
+                if(isNetworkConnected()) {
+
+                    startGoogleConfigurations();
+                    signInWithGoogle();
+                }
+                else {
+                   // Toast.makeText(getContext(), "Please check your connection !", Toast.LENGTH_LONG).show();
+
+                    Snackbar snackbar= Snackbar.make(v,  "Check your internet connection ", Snackbar.LENGTH_LONG);
+                    View snackbarView = snackbar.getView();
+                    snackbarView.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
+                    snackbar.show();
+                }
 
             }
         });
@@ -181,7 +193,12 @@ public class SignInFragment extends Fragment {
                 }
             });
         }else {
-            Toast.makeText(getContext(), "Please check your connection !", Toast.LENGTH_LONG).show();
+           // Toast.makeText(getContext(), "Please check your connection !", Toast.LENGTH_LONG).show();
+
+            Snackbar snackbar= Snackbar.make(getView(),  "Check your internet connection ", Snackbar.LENGTH_LONG);
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
+            snackbar.show();
         }
 
     }
@@ -263,7 +280,6 @@ public class SignInFragment extends Fragment {
 
     private void startGoogleConfigurations(){
 
-        if(isNetworkConnected()) {
 
             GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.default_web_client_id))
@@ -274,9 +290,7 @@ public class SignInFragment extends Fragment {
                     .enableAutoManage(getActivity() /* FragmentActivity */, null /* OnConnectionFailedListener */)
                     .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
                     .build();
-        }else {
-            Toast.makeText(getContext(), "Please check your connection !", Toast.LENGTH_LONG).show();
-        }
+
 
     }
 

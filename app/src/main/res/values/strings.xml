@@ -22,6 +22,8 @@
     <string name="tripError">Note cannot be empty</string>
     <string name="update">Update</string>
     <string name="updateNote">Update note</string>
+    <string name="editTrip">Edit trip</string>
+    <string name="startTrip">Start Trip</string>
 
 
 </resources>
