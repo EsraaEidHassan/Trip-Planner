@@ -16,6 +16,7 @@ public class DetailedActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        finish();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
