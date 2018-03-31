@@ -76,7 +76,7 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
         ImageView imageView;
         TextView tripNameTextView, startLocationTextView, destinationTextView;
         Button startTrip;
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             tripNameTextView = itemView.findViewById(R.id.title);
             startLocationTextView = itemView.findViewById(R.id.end);
@@ -86,7 +86,9 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
             startTrip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText( context, "Start trip activity", Toast.LENGTH_LONG).show();
+                    int x = getLayoutPosition();
+                    Trip trip = tripDataList.get(x);
+                    Toast.makeText( context, trip.getTrip_name(), Toast.LENGTH_LONG).show();
                 }
             });
         }
