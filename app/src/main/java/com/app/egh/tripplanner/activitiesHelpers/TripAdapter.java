@@ -2,6 +2,7 @@ package com.app.egh.tripplanner.activitiesHelpers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +15,11 @@ import android.widget.Toast;
 
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.DetailedActivity;
+import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by gehad on 3/19/18.
@@ -76,7 +79,7 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
         ImageView imageView;
         TextView tripNameTextView, startLocationTextView, destinationTextView;
         Button startTrip;
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             tripNameTextView = itemView.findViewById(R.id.title);
             startLocationTextView = itemView.findViewById(R.id.end);
@@ -86,7 +89,23 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
             startTrip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText( context, "Start trip activity", Toast.LENGTH_LONG).show();
+                    int x = getLayoutPosition();
+                    Trip tripData = tripDataList.get(x);
+                    Toast.makeText( context, tripData.getTrip_name(), Toast.LENGTH_LONG).show();
+                    //int itemPosition = recyclerView.getChildLayoutPosition(v);
+                    //Trip tripData = tripDataList.get(itemPosition);
+                   // Trip tripData = tripDataList.get(0);
+                    tripData.setStarted(true);
+                    Adapter dbAdapter = new Adapter(getContext());
+
+                    dbAdapter.updateTrip(tripData);
+
+                    //Toast.makeText( context, "Start trip activity", Toast.LENGTH_LONG).show();
+
+                    String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", tripData.getStart_lat(), tripData.getStart_long(), tripData.getStart_name(),  tripData.getEnd_lat() , tripData.getEnd_long(), tripData.getEnd_name());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    intent.setPackage("com.google.android.apps.maps");
+                    context.startActivity(intent);
                 }
             });
         }

@@ -53,6 +53,9 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
     Button editTrip;
     //LinearLayout notes;
 
+    PlaceAutocompleteFragment autocompleteFragmentStart;
+    PlaceAutocompleteFragment autocompleteFragmentEnd;
+
     Trip trip;
     Date dateAndTime;
     int year,month,day,hour,min;
@@ -116,7 +119,6 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
             @Override
             public void onClick(View view) {
                 updateTrip();
-                goToDetailedActivity();
             }
         });
 
@@ -150,7 +152,7 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
             }
         });
 
-        final PlaceAutocompleteFragment autocompleteFragmentStart = (PlaceAutocompleteFragment)
+        autocompleteFragmentStart = (PlaceAutocompleteFragment)
                 getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_start);
 
         autocompleteFragmentStart.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -183,12 +185,12 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
                         autocompleteFragmentStart.setText("");
                         view.setVisibility(View.GONE);
                         directions_start_validation = false;
-                        Toast.makeText(getContext(),"cancel start",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(),"cancel start",Toast.LENGTH_LONG).show();
                     }
                 });
 
 
-        final PlaceAutocompleteFragment autocompleteFragmentEnd = (PlaceAutocompleteFragment)
+        autocompleteFragmentEnd = (PlaceAutocompleteFragment)
                 getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_end);
 
         autocompleteFragmentEnd.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -261,6 +263,8 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
             NotificationScheduler.cancelReminder(getActivity(), AlarmActivity.class, trip.getTrip_id());
             NotificationScheduler.setReminder(getActivity(), AlarmActivity.class, trip.getTrip_id(), hour,  min, day ,  month,  year, trip );
             Log.i(TAG, "Updated " + rows_affected + " trip");
+
+            goToDetailedActivity();
         }
     }
 
@@ -311,15 +315,15 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
         }
         if(!directions_start_validation)
         {
-            //startPointField.setHint("please enter start point");
-            //startPointField.setError("please enter start point");//it gives user to info message //use any one //
+            ((EditText) autocompleteFragmentStart.getView().findViewById(R.id.place_autocomplete_search_input)).setHint("please enter start point");
+            ((EditText) autocompleteFragmentStart.getView().findViewById(R.id.place_autocomplete_search_input)).setError("please enter start point");
         }else{
             counter ++;
         }
         if(!directions_end_validation)
         {
-            //endPointField.setHint("please enter end point");
-            //endPointField.setError("please enter end point");//it gives user to info message //use any one //
+            ((EditText) autocompleteFragmentEnd.getView().findViewById(R.id.place_autocomplete_search_input)).setHint("please enter end point");
+            ((EditText) autocompleteFragmentEnd.getView().findViewById(R.id.place_autocomplete_search_input)).setError("please enter end point");
         }else{
             counter ++;
         }
