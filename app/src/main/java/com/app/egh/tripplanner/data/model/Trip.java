@@ -1,5 +1,8 @@
 package com.app.egh.tripplanner.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +12,7 @@ import java.util.List;
  * Created by toshiba on 3/17/2018.
  */
 
-public class Trip implements Serializable {
+public class Trip implements Parcelable {
 
     private int trip_id;
     private String trip_name;
@@ -164,5 +167,64 @@ public class Trip implements Serializable {
 
     public void setNotes(List<String> notes) {
         this.notes = notes;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        parcel.writeInt(trip_id);
+        parcel.writeString(trip_name);
+        parcel.writeDouble(start_lat);
+        parcel.writeDouble(start_long);
+        parcel.writeString(start_name);
+        parcel.writeDouble(end_lat);
+        parcel.writeDouble(end_long);
+        parcel.writeString(end_name);
+        //parcel.writeValue(date_time);
+        parcel.writeLong(date_time != null ? date_time.getTime() : -1);
+
+        parcel.writeInt( repeated ? 1 :0 );
+        parcel.writeInt( roundtrip ? 1 :0 );
+        parcel.writeInt( started ? 1 :0 );
+
+        //parcel.writeList(notes);
+        parcel.writeStringList(notes);
+    }
+
+    /** Static field used to regenerate object, individually or as arrays */
+    public static final Parcelable.Creator<Trip> CREATOR = new Parcelable.Creator<Trip>() {
+        public Trip createFromParcel(Parcel pc) {
+            return new Trip(pc);
+        }
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
+
+    /**Ctor from Parcel, reads back fields IN THE ORDER they were written */
+    public Trip(Parcel pc){
+        trip_id = pc.readInt();
+        trip_name =  pc.readString();
+        start_lat = pc.readDouble();
+        start_long = pc.readDouble();
+        start_name = pc.readString();
+
+        end_lat = pc.readDouble();
+        end_long = pc.readDouble();
+        end_name = pc.readString();
+        //date_time = pc.readValue();
+        long tmpDate = pc.readLong();
+        date_time = tmpDate == -1 ? null : new Date(tmpDate);
+
+        repeated = ( pc.readInt() == 1 );
+        roundtrip = ( pc.readInt() == 1 );
+        started = ( pc.readInt() == 1 );
+
+        notes = pc.createStringArrayList();
     }
 }
