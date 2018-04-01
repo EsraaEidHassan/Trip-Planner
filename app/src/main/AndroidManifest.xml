@@ -38,9 +38,7 @@
 
         <activity
             android:name=".activities.SignInActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <!--
             <meta-data
@@ -70,6 +68,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.NotesActivity"></activity>
+        <service
+            android:name=".NoteHeadService"
+            android:enabled="true"
+            android:exported="false"/>
     </application>
 
 </manifest>

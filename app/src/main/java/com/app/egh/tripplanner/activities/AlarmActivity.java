@@ -11,11 +11,13 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -23,14 +25,21 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.data.model.Adapter;
+import com.app.egh.tripplanner.data.model.NoteHeadService;
 import com.app.egh.tripplanner.data.model.Trip;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class AlarmActivity extends AppCompatActivity {
+
+    private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
+
     final static String TAG = "powerLock";
     Ringtone r;
     @Override
@@ -114,6 +123,17 @@ public class AlarmActivity extends AppCompatActivity {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                         intent.setPackage("com.google.android.apps.maps");
                         startActivity(intent);
+
+                        // new code for notes
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(AlarmActivity.this)) {
+                            Intent intent_permission = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                    Uri.parse("package:" + getPackageName()));
+                            intent_permission.putExtra("trip",currentTrip);
+                            startActivityForResult(intent_permission, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
+                        } else {
+                            initializeView(currentTrip);
+                        }
+
                     }})
                 .setStyle(Style.HEADER_WITH_TITLE)
                 .setHeaderColor(R.color.colorAccent)
@@ -239,4 +259,35 @@ public class AlarmActivity extends AppCompatActivity {
 
             .show();
             */
+
+    private void initializeView(Trip trip) {
+        List<String> notes = new ArrayList<>();
+        notes = trip.getNotes();
+        Intent intent = new Intent(AlarmActivity.this, NoteHeadService.class);
+        intent.putExtra("notes", (Serializable) notes);
+        startService(intent);
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
+
+            //Check if the permission is granted or not.
+            // Settings activity never returns proper value so instead check with following method
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Settings.canDrawOverlays(this)) {
+                    initializeView((Trip) data.getSerializableExtra("trip"));
+                } else { //Permission is not available
+                    Toast.makeText(this,
+                            "Draw over other app permission not available. Closing the application",
+                            Toast.LENGTH_SHORT).show();
+
+                    finish();
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }
