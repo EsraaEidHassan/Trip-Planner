@@ -2,9 +2,15 @@ package com.app.egh.tripplanner.fragments;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +29,11 @@ import com.app.egh.tripplanner.R;
 import com.app.egh.tripplanner.activities.AlarmActivity;
 import com.app.egh.tripplanner.activities.DetailedActivity;
 import com.app.egh.tripplanner.activities.EditTripActivity;
+import com.app.egh.tripplanner.activitiesHelpers.MyDividerItemDecoration;
+import com.app.egh.tripplanner.activitiesHelpers.NoteAdapter;
 import com.app.egh.tripplanner.activitiesHelpers.NotificationScheduler;
+import com.app.egh.tripplanner.activitiesHelpers.SwipeController;
+import com.app.egh.tripplanner.activitiesHelpers.SwipeControllerAction;
 import com.app.egh.tripplanner.data.model.Adapter;
 import com.app.egh.tripplanner.data.model.Trip;
 import com.google.android.gms.common.api.Status;
@@ -32,9 +42,12 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +64,8 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
     CheckBox repeatCheckbox;
     CheckBox doneCheckbox;
     Button editTrip;
+    RecyclerView notesRecyclerView;
+    Button addNoteBtn;
     //LinearLayout notes;
 
     PlaceAutocompleteFragment autocompleteFragmentStart;
@@ -61,6 +76,7 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
     int year,month,day,hour,min;
     boolean directions_start_validation;
     boolean directions_end_validation;
+    List<String> tripNotes;
 
     public EditTripFragment() {
         // Required empty public constructor
@@ -84,6 +100,14 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
         repeatCheckbox = view.findViewById(R.id.repeatCheckbox);
         doneCheckbox = view.findViewById(R.id.doneCheckbox);
         editTrip = view.findViewById(R.id.editTrip);
+        notesRecyclerView = view.findViewById(R.id.notesRecyclerView);
+        addNoteBtn = view.findViewById(R.id.addNoteBtn);
+
+        notesRecyclerView.setHasFixedSize(true);
+        notesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        tripNotes = new ArrayList<>();
+        tripNotes = trip.getNotes();
 
         trip_name.setText(trip.getTrip_name());
         directions_start_validation = true;
@@ -114,6 +138,83 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
             dateField.setText(day + "/" + (month + 1) + "/" + year);
             timeField.setText(getTime());
         }
+
+        final NoteAdapter adapter = new NoteAdapter(getContext(),tripNotes,notesRecyclerView);
+
+        final SwipeController swipeController = new SwipeController(200,30,15, 107, new SwipeControllerAction() {
+            @Override
+            public void onLeftClicked(final int position) {
+
+                new LovelyTextInputDialog(getContext())
+                        .setTopColorRes(R.color.colorPrimary)
+                        .setMessage(R.string.updateNote)
+                        .setIcon(R.drawable.ic_note_add_black_24dp)
+                        .setInputFilter(R.string.tripError, new LovelyTextInputDialog.TextFilter() {
+                            @Override
+                            public boolean check(String text) {
+                                return text.matches("\\w+");
+                            }
+                        })
+                        .setConfirmButton(R.string.update, new LovelyTextInputDialog.OnTextInputConfirmListener() {
+                            @Override
+                            public void onTextInputConfirmed(String text) {
+                                tripNotes.set(position,text);
+                                adapter.notifyItemChanged(position);
+                            }
+                        })
+                        .setCancelable(true)
+                        .show();
+            }
+
+            @Override
+            public void onRightClicked(int position) {
+                // dialog
+                AlertDialog diaBox = AskOption(position,adapter);
+                diaBox.show();
+
+            }
+        });
+
+        notesRecyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 2));
+        ItemTouchHelper helper = new ItemTouchHelper(swipeController);
+        helper.attachToRecyclerView(notesRecyclerView);
+        notesRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
+
+        notesRecyclerView.setAdapter(adapter);
+
+
+
+        addNoteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new LovelyTextInputDialog(getContext())
+                        .setTopColorRes(R.color.colorPrimary)
+                        .setMessage(R.string.noteTitle)
+                        .setIcon(R.drawable.ic_note_add_black_24dp)
+                        .setInputFilter(R.string.tripError, new LovelyTextInputDialog.TextFilter() {
+                            @Override
+                            public boolean check(String text) {
+                                return text.matches("\\w+");
+                            }
+                        })
+                        .setConfirmButton(R.string.addNote, new LovelyTextInputDialog.OnTextInputConfirmListener() {
+                            @Override
+                            public void onTextInputConfirmed(String text) {
+                                if(!text.isEmpty())
+                                    tripNotes.add(text);
+                                ///   adapter.notifyItemInserted();
+
+                            }
+                        })
+                        .setCancelable(true)
+                        .show();
+            }
+        });
 
         editTrip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -354,4 +455,36 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
         intent.putExtra("trip",trip);
         startActivity(intent);
     }
+
+    private AlertDialog AskOption(final int position , final NoteAdapter adapter)
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getContext())
+                //set message, title, and icon
+                .setTitle("Delete trip")
+                .setMessage("Are you sure? ")
+                .setIcon(R.drawable.ic_delete_forever_black_24dp)
+
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        adapter.noteDataList.remove(position);
+                        adapter.notifyItemRemoved(position);
+                        adapter.notifyItemRangeRemoved(position, adapter.getItemCount());
+                        dialog.dismiss();
+                    }
+
+                })
+
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+
+    }
+
 }
