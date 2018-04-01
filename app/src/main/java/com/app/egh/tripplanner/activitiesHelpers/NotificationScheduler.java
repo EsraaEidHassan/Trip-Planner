@@ -65,14 +65,15 @@ public class NotificationScheduler
         intent1.putExtra("tripReminder",trip);
        PendingIntent pendingIntent = PendingIntent.getActivity(context, id, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        am.set(AlarmManager.RTC_WAKEUP, setcalendar.getTimeInMillis(), pendingIntent);
+        /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Log.e("setReminder: ." , ""+ setcalendar.getTimeInMillis());
             am.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, setcalendar.getTimeInMillis()+ SystemClock.elapsedRealtime(), pendingIntent);
         }
         else{
             System.out.println(setcalendar.getTimeInMillis());
             am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, setcalendar.getTimeInMillis() + SystemClock.elapsedRealtime(), pendingIntent);
-        }
+        }*/
 
     }
 

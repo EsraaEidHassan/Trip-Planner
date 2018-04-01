@@ -154,14 +154,14 @@ public class AlarmActivity extends AppCompatActivity {
 
         mBuilder.setContentIntent(pendingIntent)
                 // .setSmallIcon(R.drawable.app_logo_notification)
-                .setSmallIcon(R.drawable.places_ic_search)
+                .setSmallIcon(R.mipmap.trip_icon)
                 .setContentTitle(title)
                 .setContentText(content)
                 .setAutoCancel(true)
                 .setOngoing(true)
 
                 //  .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_logo));
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.places_ic_search));
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.trip_icon));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mBuilder.setPriority(Notification.PRIORITY_MAX);
