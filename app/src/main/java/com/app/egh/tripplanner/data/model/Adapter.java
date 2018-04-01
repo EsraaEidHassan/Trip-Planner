@@ -243,7 +243,7 @@ public class Adapter {
         return null;
     }
 
-    public boolean isPast(Date date){
+    public static boolean isPast(Date date){
         //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //Date strDate = sdf.parse(valid_until);
         if (System.currentTimeMillis() > date.getTime()) {
