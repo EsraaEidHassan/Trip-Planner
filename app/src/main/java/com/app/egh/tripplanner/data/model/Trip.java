@@ -1,6 +1,7 @@
 package com.app.egh.tripplanner.data.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -106,7 +107,10 @@ public class Trip implements Serializable {
     }
 
     public List<String> getNotes() {
-        return notes;
+        if (notes != null)
+            return notes;
+        else
+            return new ArrayList<>();
     }
 
     // setters
