@@ -10,8 +10,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
+import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 
 import com.app.egh.tripplanner.data.model.Trip;
 
@@ -62,7 +65,14 @@ public class NotificationScheduler
         intent1.putExtra("tripReminder",trip);
        PendingIntent pendingIntent = PendingIntent.getActivity(context, id, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, setcalendar.getTimeInMillis(), pendingIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Log.e("setReminder: ." , ""+ setcalendar.getTimeInMillis());
+            am.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, setcalendar.getTimeInMillis()+ SystemClock.elapsedRealtime(), pendingIntent);
+        }
+        else{
+            System.out.println(setcalendar.getTimeInMillis());
+            am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, setcalendar.getTimeInMillis() + SystemClock.elapsedRealtime(), pendingIntent);
+        }
 
     }
 
