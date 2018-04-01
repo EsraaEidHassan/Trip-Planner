@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TripPlanner </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="addTrip">أضف الرحلة</string>
+    <string name="EmailAddress">البريد الألكتروني</string>
+    <string name="Password">كلمة السر</string>
+    <string name="orLogin">أو سجل الدخول بـ</string>
+    <string name="signIn">Sign in</string>
+    <string name="notUser">ليس لديك حساب؟ سجل الآن!</string>
+    <string name="createAnAccount">أنشئ حسابًا</string>
+    <string name="end">الوصول</string>
+    <string name="start">ابدأ</string>
+    <string name="confirmPassword">تأكيد كلمة السر</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="signup">تسجيل</string>
+    <string name="OrSignUpWith">أو أنشئ حسابًا عن طريق</string>
+    <string name="alreadyRegistered">لديك حساب بالفعل؟ سجل الدخول الآن</string>
+    <string name="title_activity_maps">الخريطة</string>
+    <string name="noteTitle">اكتب ملاحظاتك</string>
+    <string name="addNote">إضافة</string>
+    <string name="tripError">املأ الخانة</string>
+    <string name="update">تحديث</string>
+    <string name="updateNote">تحديث</string>
+    <string name="editTrip">تعديل الرحلة</string>
+    <string name="startTrip">ابدأ الرحلة</string>
+    <string name="tripNamestr">اسم الرحلة</string>
+    <string name="Fromstr">من</string>
+    <string name="Tostr">إلى</string>
+    <string name="repeatTripstr">تكرار الرحلة</string>
+    <string name="oneDirectionstr">اتجاه واحد</string>
+    <string name="roundTripstr">ذهاب وعودة</string>
+    <string name="notestr">ملاحظات</string>
+    <string name="addTripstr">أضف الرحلة</string>
+    <string name="datestr">التاريخ</string>
+    <string name="timestr">الوقت</string>
+
+
+</resources>
