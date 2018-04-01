@@ -24,6 +24,16 @@
     <string name="updateNote">Update note</string>
     <string name="editTrip">Edit trip</string>
     <string name="startTrip">Start Trip</string>
+    <string name="tripNamestr">Trip Name</string>
+    <string name="Fromstr">From</string>
+    <string name="Tostr">To</string>
+    <string name="repeatTripstr">Repeat Trip</string>
+    <string name="oneDirectionstr">One Direction</string>
+    <string name="roundTripstr">Round Trip</string>
+    <string name="notestr">Notes</string>
+    <string name="addTripstr">Add Trip</string>
+    <string name="datestr">Date</string>
+    <string name="timestr">Time</string>
 
 
 </resources>
