@@ -49,6 +49,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.app.egh.tripplanner.data.model.Adapter.isPast;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -102,6 +104,10 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
         editTrip = view.findViewById(R.id.editTrip);
         notesRecyclerView = view.findViewById(R.id.notesRecyclerView);
         addNoteBtn = view.findViewById(R.id.addNoteBtn);
+
+        if(trip.isStarted() || isPast(trip.getDate_time())){ // ispast is static method in Adapter class
+            addNoteBtn.setVisibility(Button.INVISIBLE);
+        }
 
         notesRecyclerView.setHasFixedSize(true);
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
