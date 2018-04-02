@@ -113,6 +113,42 @@ public class Adapter {
         return trips;
     }
 
+    public Trip getTrip(int id){
+
+        Trip trip = new Trip();
+
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        String query = "SELECT * FROM "
+                +TripTable.TRIP_TABLE_NAME
+                +" WHERE "
+                +TripTable.TRIP_COLUMN_ID
+                +" = ?";;
+        Cursor cursor = sqLiteDatabase.rawQuery(query,new String[]{id + ""});
+        if(cursor.moveToFirst()){
+            do{
+                trip.setTrip_id(cursor.getInt(cursor.getColumnIndex(TripTable.TRIP_COLUMN_ID)));
+                trip.setTrip_name(cursor.getString(cursor.getColumnIndex(TripTable.TRIP_COLUMN_NAME)));
+                trip.setStart_lat(cursor.getDouble(cursor.getColumnIndex(TripTable.TRIP_COLUMN_START_POINT_LAT)));
+                trip.setStart_long(cursor.getDouble(cursor.getColumnIndex(TripTable.TRIP_COLUMN_START_POINT_LONG)));
+                trip.setStart_name(cursor.getString(cursor.getColumnIndex(TripTable.TRIP_COLUMN_START_POINT_NAME)));
+                trip.setEnd_lat(cursor.getDouble(cursor.getColumnIndex(TripTable.TRIP_COLUMN_END_POINT_LAT)));
+                trip.setEnd_long(cursor.getDouble(cursor.getColumnIndex(TripTable.TRIP_COLUMN_END_POINT_LONG)));
+                trip.setEnd_name(cursor.getString(cursor.getColumnIndex(TripTable.TRIP_COLUMN_END_POINT_NAME)));
+                trip.setDate_time(fromStringToDate(cursor.getString(cursor.getColumnIndex(TripTable.TRIP_COLUMN_DATE_TIME)))); // may cause problem
+                trip.setRepeated(cursor.getInt(cursor.getColumnIndex(TripTable.TRIP_COLUMN_REPEATED))>0);
+                trip.setRoundtrip(cursor.getInt(cursor.getColumnIndex(TripTable.TRIP_COLUMN_ROUNDTRIP))>0);
+                trip.setStarted(cursor.getInt(cursor.getColumnIndex(TripTable.TRIP_COLUMN_STARTED))>0);
+                trip.setNotes(getAllNotes(trip.getTrip_id()));
+
+            }while (cursor.moveToNext());
+
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return trip;
+    }
+
     public List<Trip> getHistoryTrips(){
         List<Trip> trips = getAllTrips();
         List<Trip> old_trips = new ArrayList<>();
