@@ -91,7 +91,7 @@ public class AlarmActivity extends AppCompatActivity {
                         //Trip tripData = tripDataList.get(itemPosition);
                         // Trip tripData = tripDataList.get(0);
                         tripData.setStarted(true);
-                        String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", tripData.getStart_lat(), tripData.getStart_long(), tripData.getStart_name(),  tripData.getEnd_lat() , tripData.getEnd_long(), tripData.getEnd_name());
+                        //String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", tripData.getStart_lat(), tripData.getStart_long(), tripData.getStart_name(),  tripData.getEnd_lat() , tripData.getEnd_long(), tripData.getEnd_name());
                         if(tripData.isRoundtrip()){
                             tripData.setStarted(false);
                             tripData.setRoundtrip(false);
@@ -120,9 +120,9 @@ public class AlarmActivity extends AppCompatActivity {
 
                         //Toast.makeText( context, "Start trip activity", Toast.LENGTH_LONG).show();
 
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                        /*Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                         intent.setPackage("com.google.android.apps.maps");
-                        startActivity(intent);
+                        startActivity(intent);*/
 
                         // new code for notes
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(AlarmActivity.this)) {
@@ -261,10 +261,10 @@ public class AlarmActivity extends AppCompatActivity {
             */
 
     private void initializeView(Trip trip) {
-        List<String> notes = new ArrayList<>();
-        notes = trip.getNotes();
+        //List<String> notes = new ArrayList<>();
+        //notes = trip.getNotes();
         Intent intent = new Intent(AlarmActivity.this, NoteHeadService.class);
-        intent.putExtra("notes", (Serializable) notes);
+        intent.putExtra("trip", trip);
         startService(intent);
         finish();
     }
