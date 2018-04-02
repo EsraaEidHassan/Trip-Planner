@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -62,7 +63,9 @@ public class NotificationScheduler
 
 
         Intent intent1 = new Intent(context, cls);
-        intent1.putExtra("tripReminder",trip);
+       // Bundle bundle = new Bundle();
+       // bundle.putParcelable("tripReminder",trip);
+        intent1.putExtra("tripReminder",trip.getTrip_id());
        PendingIntent pendingIntent = PendingIntent.getActivity(context, id, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, setcalendar.getTimeInMillis(), pendingIntent);

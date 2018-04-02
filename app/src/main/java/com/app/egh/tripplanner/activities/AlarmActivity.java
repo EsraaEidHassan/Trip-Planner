@@ -72,8 +72,11 @@ public class AlarmActivity extends AppCompatActivity {
 
          r = RingtoneManager.getRingtone(getApplicationContext(), alert);
         r.play();
-       final Trip currentTrip = (Trip) intent.getSerializableExtra("tripReminder");
 
+        int tripId = intent.getIntExtra("tripReminder",-1);
+        Adapter adb = new Adapter(this);
+     //  final Trip currentTrip = (Trip) intent.getSerializableExtra("tripReminder");
+        final Trip currentTrip = adb.getTrip(tripId);
         new MaterialStyledDialog.Builder(this)
                 .setTitle(currentTrip.getTrip_name())
                 .setDescription("Do you want to start your trip now?")
@@ -168,7 +171,8 @@ public class AlarmActivity extends AppCompatActivity {
 
         Intent intent = new Intent(mContext, AlarmActivity.class);
         if (trip != null) {
-            intent.putExtra("tripReminder", trip);
+           // intent.putExtra("tripReminder", trip);
+            intent.putExtra("tripReminder",trip.getTrip_id());
         }
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
