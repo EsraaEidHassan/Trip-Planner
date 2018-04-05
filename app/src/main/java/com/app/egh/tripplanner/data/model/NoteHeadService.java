@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.app.egh.tripplanner.R;
+import com.app.egh.tripplanner.activities.AlarmActivity;
 import com.app.egh.tripplanner.activities.NotesActivity;
 
 import java.io.Serializable;
@@ -41,6 +43,7 @@ public class NoteHeadService extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
+        //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         //Inflate the chat head layout we created
         mChatHeadView = LayoutInflater.from(this).inflate(R.layout.layout_note_head, null);
 
@@ -128,18 +131,20 @@ public class NoteHeadService extends Service{
             }
         });
 
-        tripData = received_intent.getParcelableExtra("trip");
-        String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", tripData.getStart_lat(), tripData.getStart_long(), tripData.getStart_name(),  tripData.getEnd_lat() , tripData.getEnd_long(), tripData.getEnd_name());
 
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        intent.setPackage("com.google.android.apps.maps");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         received_intent = intent;
+        int id = received_intent.getIntExtra("trip",-1);
+        tripData = new Adapter(this).getTrip(id);
+        String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", tripData.getStart_lat(), tripData.getStart_long(), tripData.getStart_name(),  tripData.getEnd_lat() , tripData.getEnd_long(), tripData.getEnd_name());
+
+        Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        intent2.setPackage("com.google.android.apps.maps");
+        intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent2);
         return super.onStartCommand(intent, flags, startId);
     }
 

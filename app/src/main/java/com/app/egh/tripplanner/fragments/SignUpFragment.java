@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,10 +100,15 @@ public class SignUpFragment extends Fragment {
             this.email.setError("please enter email");//it gives user to info message //use any one //
             return;
         }
-        if(password.equalsIgnoreCase(""))
+        if( !isValidEmail(email)){
+            this.email.setHint("please enter correct email");//it gives user to hint
+            this.email.setError("please enter correct email");//it gives user to info message //use any one //
+            return;
+        }
+        if(password.equalsIgnoreCase("") || password.length() < 6)
         {
-            this.password.setHint("please enter password");//it gives user to hint
-            this.password.setError("please enter password");//it gives user to info message //use any one //
+            this.password.setHint("please enter at least 6 characters ");//it gives user to hint
+            this.password.setError("please enter at least 6 characters ");//it gives user to info message //use any one //
             return;
         }
         if(!confirmPassword.equals(password))
@@ -149,4 +155,7 @@ public class SignUpFragment extends Fragment {
         return cm.getActiveNetworkInfo() != null;
     }
 
+    public final static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
 }

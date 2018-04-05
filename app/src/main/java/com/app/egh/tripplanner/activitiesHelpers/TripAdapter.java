@@ -1,8 +1,11 @@
 package com.app.egh.tripplanner.activitiesHelpers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.egh.tripplanner.R;
+import com.app.egh.tripplanner.activities.AlarmActivity;
 import com.app.egh.tripplanner.activities.DetailedActivity;
 import com.app.egh.tripplanner.data.model.Adapter;
+import com.app.egh.tripplanner.data.model.NoteHeadService;
 import com.app.egh.tripplanner.data.model.Trip;
 
 import java.util.Date;
@@ -28,9 +33,12 @@ import java.util.Locale;
 
 public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
 
+    private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
+
     private static final String TAG = "TripAdapter";
     public List<Trip> tripDataList;
     private Context context;
+    private Activity activity;
     private RecyclerView recyclerView;
     private final View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
@@ -42,6 +50,7 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
             //Bundle bundle = new Bundle();
             //bundle.putParcelable();
             intent.putExtra("trip",tripData);
+            activity.finish();
             context.startActivity(intent);
         }
     };
@@ -124,11 +133,40 @@ public class TripAdapter extends RecyclerView.Adapter <TripAdapter.ViewHolder> {
 
                     //Toast.makeText( context, "Start trip activity", Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    /*Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                     intent.setPackage("com.google.android.apps.maps");
-                    context.startActivity(intent);
+                    context.startActivity(intent);*/
+
+                    // new code for notes
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
+                        Intent intent_permission = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                Uri.parse("package:" + context.getPackageName()));
+                        intent_permission.putExtra("trip",tripData);
+                        activity.startActivityForResult(intent_permission, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
+                    } else {
+                        initializeView(tripDataList.get(x));
+                    }
+
                 }
             });
         }
     }
+
+    private void initializeView(Trip trip) {
+        //List<String> notes = new ArrayList<>();
+        //notes = trip.getNotes();
+        Intent intent = new Intent(context, NoteHeadService.class);
+        //Bundle b = new Bundle();
+        //b.putSerializable("trip", trip);
+        intent.putExtra("trip", trip.getTrip_id());
+        activity.finish();
+        context.startService(intent);
+
+    }
+
+    public void setThisActivity(Activity activity){
+
+        this.activity = activity;
+    }
+
 }

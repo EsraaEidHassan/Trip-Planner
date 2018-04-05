@@ -85,6 +85,7 @@ public class HomeFragment extends Fragment {
             emptyLabel.setVisibility(View.VISIBLE);
 
         final TripAdapter adapter = new TripAdapter(getContext(),allTrips,recyclerView);
+        adapter.setThisActivity(getActivity());
 
         //add listiners to views
         fab.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +127,7 @@ public class HomeFragment extends Fragment {
 
     private void gotoAddTripActivity(AppCompatActivity activity){
 
-        //getActivity().finish();
+        getActivity().finish();
         Intent intent = new Intent(activity, AddTripActivity.class);
         startActivity(intent);
 

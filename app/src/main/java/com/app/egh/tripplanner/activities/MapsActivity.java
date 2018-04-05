@@ -1,5 +1,6 @@
 package com.app.egh.tripplanner.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -269,5 +270,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onBackPressed() {
         finish();
+        startActivity(new Intent(this,HomeActivity.class));
     }
 }

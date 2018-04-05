@@ -12,7 +12,7 @@ import java.util.List;
  * Created by toshiba on 3/17/2018.
  */
 
-public class Trip implements Parcelable {
+public class Trip implements Serializable {
 
     private int trip_id;
     private String trip_name;
@@ -169,7 +169,7 @@ public class Trip implements Parcelable {
         this.notes = notes;
     }
 
-    @Override
+    /*@Override
     public int describeContents() {
         return 0;
     }
@@ -196,7 +196,7 @@ public class Trip implements Parcelable {
         parcel.writeStringList(notes);
     }
 
-    /** Static field used to regenerate object, individually or as arrays */
+     //Static field used to regenerate object, individually or as arrays
     public static final Parcelable.Creator<Trip> CREATOR = new Parcelable.Creator<Trip>() {
         public Trip createFromParcel(Parcel pc) {
             return new Trip(pc);
@@ -206,7 +206,7 @@ public class Trip implements Parcelable {
         }
     };
 
-    /**Ctor from Parcel, reads back fields IN THE ORDER they were written */
+    //Ctor from Parcel, reads back fields IN THE ORDER they were written
     public Trip(Parcel pc){
         trip_id = pc.readInt();
         trip_name =  pc.readString();
@@ -226,5 +226,5 @@ public class Trip implements Parcelable {
         started = ( pc.readInt() == 1 );
 
         notes = pc.createStringArrayList();
-    }
+    }*/
 }

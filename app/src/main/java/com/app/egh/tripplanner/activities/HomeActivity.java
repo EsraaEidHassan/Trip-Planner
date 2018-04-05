@@ -133,6 +133,7 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_history) {
             //do action
+            finish();
             startActivity(new Intent(this,HistoryActivity.class));
             return true;
         }else if (id == R.id.action_sync) {
@@ -141,6 +142,7 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         }else if (id == R.id.action_map) {
             // do action
+            finish();
             startActivity(new Intent(this,MapsActivity.class));
             return true;
         }

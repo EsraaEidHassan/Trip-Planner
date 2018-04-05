@@ -24,4 +24,10 @@ public class HistoryActivity extends AppCompatActivity {
             startActivity(new Intent(this,SignInActivity.class));
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(this,HomeActivity.class));
+    }
 }

@@ -44,4 +44,8 @@ public class NotesActivity extends AppCompatActivity {
         }
 
     }
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

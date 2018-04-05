@@ -106,7 +106,9 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
         addNoteBtn = view.findViewById(R.id.addNoteBtn);
 
         if(trip.isStarted() || isPast(trip.getDate_time())){ // ispast is static method in Adapter class
-            addNoteBtn.setVisibility(Button.INVISIBLE);
+            //addNoteBtn.setVisibility(Button.INVISIBLE);
+            doneCheckbox.setChecked(true);
+            doneCheckbox.setEnabled(false);
         }
 
         notesRecyclerView.setHasFixedSize(true);
@@ -364,6 +366,7 @@ public class EditTripFragment extends Fragment implements DatePickerDialog.OnDat
             c.set(year, month, day, hour, min);
             dateAndTime = c.getTime();
             trip.setDate_time(dateAndTime);
+            trip.setNotes(tripNotes);
 
             Adapter myAdapter = new Adapter(getActivity());
             long rows_affected = myAdapter.updateTrip(trip);

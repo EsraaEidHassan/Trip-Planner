@@ -128,7 +128,7 @@ public class AlarmActivity extends AppCompatActivity {
                         startActivity(intent);*/
 
                         // new code for notes
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(AlarmActivity.this)) {
+                       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(AlarmActivity.this)) {
                             Intent intent_permission = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                                     Uri.parse("package:" + getPackageName()));
                             intent_permission.putExtra("trip",currentTrip);
@@ -268,9 +268,12 @@ public class AlarmActivity extends AppCompatActivity {
         //List<String> notes = new ArrayList<>();
         //notes = trip.getNotes();
         Intent intent = new Intent(AlarmActivity.this, NoteHeadService.class);
-        intent.putExtra("trip", trip);
-        startService(intent);
+        //Bundle b = new Bundle();
+        //b.putSerializable("trip", trip);
+        intent.putExtra("trip", trip.getTrip_id());
         finish();
+        startService(intent);
+
     }
 
     @Override

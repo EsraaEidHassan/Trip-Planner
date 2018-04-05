@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="65dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/chat_head_root"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -13,7 +13,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/ic_android_circle"
+        android:src="@drawable/notes"
         tools:ignore="ContentDescription"/>
 
     <!--Close button-->
