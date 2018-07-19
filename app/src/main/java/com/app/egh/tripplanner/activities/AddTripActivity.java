@@ -8,6 +8,7 @@ import com.app.egh.tripplanner.R;
 
 public class AddTripActivity extends AppCompatActivity {
 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
